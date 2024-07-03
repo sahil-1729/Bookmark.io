@@ -1,6 +1,6 @@
 "use client"
 
-import { z } from "zod"
+import { ZodType, z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { Button } from "@/components/ui/button"
@@ -30,7 +30,13 @@ import { CirclePlus, X } from 'lucide-react';
 import { useState } from "react"
 import clsx from 'clsx';
 
-const formSchema = z.object({
+interface formInterface {
+    labels: string,
+    categories: string,
+    link: string
+}
+
+const formSchema: ZodType<formInterface> = z.object({
     labels: z.string().min(2, {
         message: "label must be at least 2 characters.",
     }).max(50),
@@ -62,13 +68,16 @@ export default function DialogForm() {
     })
     // 2. Define a submit handler.
     function onSubmit(values: z.infer<typeof formSchema>) {
+        //THIS FUNCTION WILL BE EXECUTED ONLY AFTER BEING VALIDATED BY ZOD 
+        // if failed to validate then the function wont execute 
+
         // Do something with the form values.
         // ✅ This will be type-safe and validated.
 
         // const errorsList: object = form.formState.errors
         // console.log(errorsList)
 
-        console.log('success ', values)
+        // console.log('success ', values)
         setForm(values)
         form.reset()
         shift()
@@ -80,17 +89,20 @@ export default function DialogForm() {
     }
 
     return (<Dialog open={check}>
-        <DialogTrigger><CirclePlus onClick={() => shift()} className="right-12 bottom-12 fixed" size={40} color="" /></DialogTrigger>
-        <DialogContent className="bg-black">
+        <DialogTrigger ><CirclePlus onClick={() => {
+            shift()
+            form.reset()
+        }} className="right-12 bottom-12 fixed" size={40} color="white" /></DialogTrigger>
+        <DialogContent className="primary sm:w-[32rem] sm:h-[30rem] w-full h-full">
             <DialogHeader>
                 <DialogTitle>Add bookmark
                 </DialogTitle>
-                <DialogDescription>
+                {/* <DialogDescription>
                     ...
-                </DialogDescription>
+                </DialogDescription> */}
             </DialogHeader>
-            <DialogClose onClick={() => shift()} className="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground">
-                <X className="h-4 w-4" />
+            <DialogClose className="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground">
+                <X onClick={() => shift()} className="h-4 w-4" />
                 <span className="sr-only">Close</span>
             </DialogClose>
             <Form {...form} >
@@ -102,7 +114,7 @@ export default function DialogForm() {
                             <FormItem>
                                 <FormLabel>Labels</FormLabel>
                                 <FormControl>
-                                    <Input placeholder="link associated to which topic?" className="text-black" {...field} />
+                                    <Input placeholder="link associated to which topic?" className="" {...field} />
                                 </FormControl>
                                 <FormDescription>
                                     This will be your labels.
@@ -118,7 +130,7 @@ export default function DialogForm() {
                             <FormItem>
                                 <FormLabel>Categories</FormLabel>
                                 <FormControl>
-                                    <Input placeholder="where will this bookmark belong?" className="text-black" {...field} />
+                                    <Input placeholder="where will this bookmark belong?" className="" {...field} />
                                 </FormControl>
                                 <FormDescription>
                                     This will be your categories.
@@ -134,7 +146,7 @@ export default function DialogForm() {
                             <FormItem>
                                 <FormLabel>Link</FormLabel>
                                 <FormControl>
-                                    <Input placeholder="Paste in the url" className="text-black" {...field} />
+                                    <Input placeholder="Paste in the url" className="" {...field} />
                                 </FormControl>
                                 <FormDescription>
                                     This will be your link.
