@@ -9,6 +9,7 @@ import Link from 'next/link';
 // import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
 // import { LogOut, MoreHorizontal, Settings } from 'lucide-react';
 import { usePathname } from 'next/navigation';
+import { Separator } from './ui/separator';
 
 interface SidebarDesktopProps {
   sidebarItems: SidebarItems;
@@ -36,6 +37,7 @@ export function SidebarDesktop(props: SidebarDesktopProps) {
           ))}
           {/* {props.sidebarItems.extras} */}
         </div>
+        <Separator className='bg-primary my-4' orientation="horizontal" />
         {/* <div className='absolute left-0 bottom-3 w-full px-3'>
             <Separator className='absolute -top-3 left-0 w-full' />
             <Popover>

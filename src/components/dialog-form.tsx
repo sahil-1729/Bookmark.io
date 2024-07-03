@@ -30,11 +30,7 @@ import { CirclePlus, X } from 'lucide-react';
 import { useState } from "react"
 import clsx from 'clsx';
 
-interface formInterface {
-    labels: string,
-    categories: string,
-    link: string
-}
+import { formInterface, setBookmark } from "@/types"
 
 const formSchema: ZodType<formInterface> = z.object({
     labels: z.string().min(2, {
@@ -48,14 +44,16 @@ const formSchema: ZodType<formInterface> = z.object({
     }).max(1000).url({ message: "Invalid url" })
 })
 
+interface props {
+    bookmark: Array<formInterface>,
+    setBookmark: setBookmark,
+}
 
-
-
-export default function DialogForm() {
+export default function DialogForm({ bookmark, setBookmark }: props) {
 
     // 1. Define your form.
     const [check, setCheck] = useState(false)
-    const [formData, setForm] = useState({})
+    const [formData, setForm] = useState<formInterface>()
 
 
     var form = useForm<z.infer<typeof formSchema>>({
@@ -71,15 +69,14 @@ export default function DialogForm() {
         //THIS FUNCTION WILL BE EXECUTED ONLY AFTER BEING VALIDATED BY ZOD 
         // if failed to validate then the function wont execute 
 
-        // Do something with the form values.
-        // ✅ This will be type-safe and validated.
-
-        // const errorsList: object = form.formState.errors
-        // console.log(errorsList)
-
         // console.log('success ', values)
         setForm(values)
         form.reset()
+
+        const addBookmarks = [...bookmark, values]
+        setBookmark(addBookmarks)
+        // console.log(addBookmarks)
+
         shift()
     }
 
@@ -93,13 +90,13 @@ export default function DialogForm() {
             shift()
             form.reset()
         }} className="right-12 bottom-12 fixed" size={40} color="white" /></DialogTrigger>
-        <DialogContent className="primary sm:w-[32rem] sm:h-[30rem] w-full h-full">
+        <DialogContent className="primary sm:w-[32rem] sm:h-max w-full h-full">
             <DialogHeader>
                 <DialogTitle>Add bookmark
                 </DialogTitle>
-                {/* <DialogDescription>
-                    ...
-                </DialogDescription> */}
+                <DialogDescription>
+                    Don't worry, we'll save you the trouble of finding this frustration again
+                </DialogDescription>
             </DialogHeader>
             <DialogClose className="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground">
                 <X onClick={() => shift()} className="h-4 w-4" />
@@ -117,7 +114,7 @@ export default function DialogForm() {
                                     <Input placeholder="link associated to which topic?" className="" {...field} />
                                 </FormControl>
                                 <FormDescription>
-                                    This will be your labels.
+                                    Just so you dont forget why you add it :{")"}
                                 </FormDescription>
                                 <FormMessage />
                             </FormItem>
@@ -133,7 +130,7 @@ export default function DialogForm() {
                                     <Input placeholder="where will this bookmark belong?" className="" {...field} />
                                 </FormControl>
                                 <FormDescription>
-                                    This will be your categories.
+                                    Helping you to organize your bookmarks
                                 </FormDescription>
                                 <FormMessage />
                             </FormItem>
@@ -146,10 +143,10 @@ export default function DialogForm() {
                             <FormItem>
                                 <FormLabel>Link</FormLabel>
                                 <FormControl>
-                                    <Input placeholder="Paste in the url" className="" {...field} />
+                                    <Input placeholder="CTRL + V" className="" {...field} />
                                 </FormControl>
                                 <FormDescription>
-                                    This will be your link.
+                                    Copy, paste, pray it doesn't change (it probably will).
                                 </FormDescription>
                                 <FormMessage />
                             </FormItem>

@@ -14,6 +14,7 @@ import Link from 'next/link';
 import { SidebarButtonSheet as SidebarButton } from './sidebar-button';
 import { usePathname } from 'next/navigation';
 import { Separator } from './ui/separator';
+
 // import { Drawer, DrawerContent, DrawerTrigger } from './ui/drawer';
 // import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
 
@@ -57,6 +58,8 @@ export function SidebarMobile(props: SidebarMobileProps) {
                         ))}
                         {/* {props.sidebarItems.extras} */}
                     </div>
+                    <Separator className='bg-primary my-4' orientation="horizontal" />
+
                     {/* <div className='absolute w-full bottom-4 px-1 left-0'>
                         <Separator className='absolute -top-3 left-0 w-full' />
                         <Drawer>

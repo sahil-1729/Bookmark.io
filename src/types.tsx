@@ -9,3 +9,10 @@ export interface SidebarItems {
     }>;
     extras?: ReactNode;
 }
+export interface formInterface {
+    labels: string,
+    categories: string,
+    link: string
+}
+
+export type setBookmark = (a: formInterface[]) => void;
