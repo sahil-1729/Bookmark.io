@@ -2,9 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider"
-import { Sidebar } from "@/components/sidebar";
-import { ModeToggle } from "@/components/theme-toggle";
-
+import { BookmarkProvider } from "@/context/app-context";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -24,15 +22,9 @@ export default function RootLayout({
           attribute="class"
           defaultTheme="system"
         >
-          <div className=" border-black stroke-border flex flex-row ">
-            <Sidebar />
-            <main className="border-white border-0 px-2 w-full h-full my-14 mx-4 sm:mx-0 sm:my-16">
-              <div className="flex justify-end mx-4 mb-4 ">
-                <ModeToggle />
-              </div>
-              {children}
-            </main>
-          </div>
+          <BookmarkProvider>
+            {children}
+          </BookmarkProvider>
         </ThemeProvider>
       </body>
     </html>

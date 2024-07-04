@@ -15,4 +15,4 @@ export interface formInterface {
     link: string
 }
 
-export type setBookmark = (a: formInterface[]) => void;
+export type setBookmark = React.Dispatch<React.SetStateAction<formInterface[]>>;
