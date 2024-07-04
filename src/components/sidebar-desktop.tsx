@@ -1,7 +1,7 @@
 'use client';
 
 import { SidebarButton } from './sidebar-button';
-import { SidebarItems } from '@/types';
+import { formInterface, SidebarItems } from '@/types';
 import Link from 'next/link';
 // import { Separator } from './ui/separator';
 // import { Popover, PopoverContent, PopoverTrigger } from './ui/popover';
@@ -10,6 +10,9 @@ import Link from 'next/link';
 // import { LogOut, MoreHorizontal, Settings } from 'lucide-react';
 import { usePathname } from 'next/navigation';
 import { Separator } from './ui/separator';
+import { useToggleContext } from '@/context/app-context';
+import { Folder } from 'lucide-react';
+import { uniq, sortedUniqBy } from 'lodash'
 
 interface SidebarDesktopProps {
   sidebarItems: SidebarItems;
@@ -17,7 +20,9 @@ interface SidebarDesktopProps {
 
 export function SidebarDesktop(props: SidebarDesktopProps) {
   const pathname = usePathname();
-
+  const { bookmarks } = useToggleContext()
+  const uniqueBookmarks = bookmarks && uniq(bookmarks.map(val => val.categories))
+  console.log('unique - ', uniqueBookmarks)
   return (
     // <aside className='w-[270px] max-w-xs h-screen fixed left-0 top-0 z-40 border-r'>
     <div className='w-80 h-full px-3 py-4 '>
@@ -38,6 +43,28 @@ export function SidebarDesktop(props: SidebarDesktopProps) {
           {/* {props.sidebarItems.extras} */}
         </div>
         <Separator className='bg-primary my-4' orientation="horizontal" />
+        {/* {bookmarks.map((bm: formInterface, key: number) => {
+          return (<div>
+            {bm.categories}
+          </div>)
+        })} */}
+
+        <div className='flex flex-col gap-1 w-full'>
+          {uniqueBookmarks.sort((a: string, b: string) => { return a > b }).map((category: string, index: number) => {
+            return (
+              <Link key={index} href='#'>
+                <SidebarButton
+                  variant={pathname === '' ? 'secondary' : 'ghost'}
+                  icon={Folder}
+                  className='w-full'
+                >
+                  {category}
+                </SidebarButton>
+              </Link>
+            )
+          })}
+        </div>
+
         {/* <div className='absolute left-0 bottom-3 w-full px-3'>
             <Separator className='absolute -top-3 left-0 w-full' />
             <Popover>

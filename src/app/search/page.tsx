@@ -15,8 +15,8 @@ export default function Home() {
                 <div className="flex justify-end mx-4 mb-4 ">
                     <ModeToggle />
                 </div>
-                <DialogForm />
                 <p>Search results here</p>
+                <DialogForm />
             </main>
         </div>
         // </BookmarkProvider>

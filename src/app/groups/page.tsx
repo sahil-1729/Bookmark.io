@@ -1,5 +1,6 @@
 "use client"
 
+import DialogForm from "@/components/dialog-form";
 import { Sidebar } from "../../components/sidebar";
 import { ModeToggle } from "@/components/theme-toggle";
 
@@ -13,6 +14,7 @@ export default function Home() {
                 </div>
                 <div className="">hello</div>
                 <p>All bookmarks inside groups here</p>
+                <DialogForm />
             </main>
         </div>
     );
