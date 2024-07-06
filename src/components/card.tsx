@@ -1,12 +1,10 @@
 import { BookmarkContext, useToggleContext } from "@/context/app-context"
-import { useContext } from "react"
 import { Button } from "./ui/button"
-import { formInterface } from "@/types"
 
 export default function Card() {
     const { bookmarks } = useToggleContext()
 
-    console.log(bookmarks)
+    // console.log(bookmarks)
 
     return bookmarks.length <= 0 ? <div className="bg-background p-4 border-primary border rounded-md flex flex-col gap-4 mx-4 mb-4 md:mb-8">
         <h5 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl">Looks like nothing here ...</h5>

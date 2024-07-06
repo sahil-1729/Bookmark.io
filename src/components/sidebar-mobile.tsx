@@ -1,6 +1,6 @@
 'use client';
 
-import { SidebarItems } from '@/types';
+import { formInterface, SidebarItems } from '@/types';
 import {
     Sheet,
     SheetClose,
@@ -9,11 +9,13 @@ import {
     SheetTrigger,
 } from './ui/sheet';
 import { Button } from './ui/button';
-import { LogOut, Menu, MoreHorizontal, Settings, X } from 'lucide-react';
+import { Folder, LogOut, Menu, MoreHorizontal, Settings, X } from 'lucide-react';
 import Link from 'next/link';
 import { SidebarButtonSheet as SidebarButton } from './sidebar-button';
 import { usePathname } from 'next/navigation';
 import { Separator } from './ui/separator';
+import { uniq } from 'lodash';
+import { useToggleContext } from '@/context/app-context';
 
 // import { Drawer, DrawerContent, DrawerTrigger } from './ui/drawer';
 // import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
@@ -24,6 +26,10 @@ interface SidebarMobileProps {
 
 export function SidebarMobile(props: SidebarMobileProps) {
     const pathname = usePathname();
+    const { bookmarks } = useToggleContext()
+
+    const uniqueBookmarks = bookmarks && uniq(bookmarks.map((val: formInterface) => val.categories))
+    console.log('unique - ', uniqueBookmarks)
 
     return (
         <Sheet>
@@ -60,6 +66,21 @@ export function SidebarMobile(props: SidebarMobileProps) {
                     </div>
                     <Separator className='bg-primary my-4' orientation="horizontal" />
 
+                    <div className='flex flex-col gap-1 w-full'>
+                        {uniqueBookmarks.sort((a: string, b: string) => { return a > b }).map((category: string, index: number) => {
+                            return (
+                                <Link key={index} href='#'>
+                                    <SidebarButton
+                                        variant={pathname === '' ? 'secondary' : 'ghost'}
+                                        icon={Folder}
+                                        className='w-full'
+                                    >
+                                        {category}
+                                    </SidebarButton>
+                                </Link>
+                            )
+                        })}
+                    </div>
                     {/* <div className='absolute w-full bottom-4 px-1 left-0'>
                         <Separator className='absolute -top-3 left-0 w-full' />
                         <Drawer>

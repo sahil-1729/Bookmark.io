@@ -14,5 +14,9 @@ export interface formInterface {
     categories: string,
     link: string
 }
-
+export type ServerActionReponse = {
+    statusCode: number;
+    status: string;
+    message: string;
+};
 export type setBookmark = React.Dispatch<React.SetStateAction<formInterface[]>>;

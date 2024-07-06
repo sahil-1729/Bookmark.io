@@ -45,10 +45,10 @@ const formSchema: ZodType<formInterface> = z.object({
     }).max(1000).url({ message: "Invalid url" })
 })
 
-interface props {
-    bookmarks: Array<formInterface>,
-    setBookmarks: setBookmark,
-}
+// interface props {
+//     bookmarks: Array<formInterface>,
+//     setBookmarks: setBookmark,
+// }
 
 export default function DialogForm() {
 

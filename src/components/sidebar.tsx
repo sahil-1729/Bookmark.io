@@ -16,7 +16,7 @@ import { SidebarMobile } from './sidebar-mobile';
 
 const sidebarItems: SidebarItems = {
     links: [
-        { label: 'Timeline', href: '/', icon: History },
+        { label: 'Timeline', href: '/timeline', icon: History },
         { label: 'Search', href: '/search', icon: Search },
         { label: 'Groups', href: '/groups', icon: Component },
         {
@@ -24,21 +24,6 @@ const sidebarItems: SidebarItems = {
             icon: Tags,
             label: 'Labels',
         },
-        // {
-        //     href: '/item/bookmarks',
-        //     icon: Bookmark,
-        //     label: 'Bookmarks',
-        // },
-        // {
-        //     href: '/item/communities',
-        //     icon: Users,
-        //     label: 'Communities',
-        // },
-        // {
-        //     href: '/item/profile',
-        //     icon: User,
-        //     label: 'Profile',
-        // },
     ],
     // extras: (
     //     <div className='flex flex-col gap-2'>
