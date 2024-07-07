@@ -1,9 +1,7 @@
-"use client"
+// "use client"
 
 import { Sidebar } from "../../components/sidebar";
-import { ModeToggle } from "@/components/theme-toggle";
 import DialogForm from "@/components/dialog-form";
-import { BookmarkProvider, useToggleContext } from "@/context/app-context";
 import Navbar from "@/components/nav-bar";
 import DialogLogin from "@/components/dialog-login-again";
 

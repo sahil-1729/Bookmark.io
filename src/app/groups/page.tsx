@@ -1,8 +1,6 @@
-"use client"
 
 import DialogForm from "@/components/dialog-form";
 import { Sidebar } from "../../components/sidebar";
-import { ModeToggle } from "@/components/theme-toggle";
 import Navbar from "@/components/nav-bar";
 import DialogLogin from "@/components/dialog-login-again";
 

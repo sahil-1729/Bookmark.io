@@ -27,11 +27,13 @@ import {
 
 } from "@/components/ui/dialog"
 import { CirclePlus, X } from 'lucide-react';
-import { useContext, useState } from "react"
+import { useState } from "react"
 import clsx from 'clsx';
 
 import { formInterface, setBookmark } from "@/types"
 import { useToggleContext } from "@/context/app-context"
+
+import { sendData } from "./send-data"
 
 const formSchema: ZodType<formInterface> = z.object({
     labels: z.string().min(2, {
@@ -45,11 +47,6 @@ const formSchema: ZodType<formInterface> = z.object({
     }).max(1000).url({ message: "Invalid url" })
 })
 
-// interface props {
-//     bookmarks: Array<formInterface>,
-//     setBookmarks: setBookmark,
-// }
-
 export default function DialogForm() {
 
     // const [bookmark, setBookmark] = useState<formInterface[]>(a)
@@ -58,7 +55,7 @@ export default function DialogForm() {
     // 1. Define your form.
     const [check, setCheck] = useState(false)
     const [formData, setForm] = useState<formInterface>()
-
+    const [link, setLink] = useState<string>("")
 
     var form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
@@ -81,13 +78,19 @@ export default function DialogForm() {
         setBookmarks(addBookmarks)
         console.log(addBookmarks)
 
+        updateUserWithId(values)
+
         shift()
     }
+
+    const updateUserWithId = sendData.bind(null)
 
     function shift() {
         const shift: boolean = !check
         setCheck(shift)
     }
+
+    console.log('the value ', form.watch('link'))
 
     return (
         <Dialog open={check}>
@@ -109,6 +112,22 @@ export default function DialogForm() {
                 </DialogClose>
                 <Form {...form} >
                     <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 ">
+                        <FormField
+                            control={form.control}
+                            name="link"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>Link</FormLabel>
+                                    <FormControl>
+                                        <Input placeholder="CTRL + V" className="" {...field} />
+                                    </FormControl>
+                                    <FormDescription>
+                                        Copy, paste, pray it doesn't change (it probably will).
+                                    </FormDescription>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
                         <FormField
                             control={form.control}
                             name="labels"
@@ -141,22 +160,7 @@ export default function DialogForm() {
                                 </FormItem>
                             )}
                         />
-                        <FormField
-                            control={form.control}
-                            name="link"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel>Link</FormLabel>
-                                    <FormControl>
-                                        <Input placeholder="CTRL + V" className="" {...field} />
-                                    </FormControl>
-                                    <FormDescription>
-                                        Copy, paste, pray it doesn't change (it probably will).
-                                    </FormDescription>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
+
                         <DialogFooter className="sm:justify-start">
                             <DialogClose asChild>
                                 {/* <Button className="border-8 border-green-700" type="button" variant="secondary">
@@ -179,3 +183,6 @@ export default function DialogForm() {
 
 
 }
+
+
+

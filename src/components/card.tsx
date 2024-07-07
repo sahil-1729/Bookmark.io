@@ -1,8 +1,33 @@
+'use server'
+
 import { BookmarkContext, useToggleContext } from "@/context/app-context"
 import { Button } from "./ui/button"
+import { useEffect } from "react"
+import { createClient } from "@/utils/supabase/server"
 
-export default function Card() {
-    const { bookmarks } = useToggleContext()
+export default async function Card() {
+
+    var bookmarks = []
+    const supabase = createClient()
+    const { data: { session }, error } = await supabase.auth.getSession()
+
+    const { data: { user } } = await supabase.auth.getUser()
+
+    if (session && session.user) {
+
+        const { data, error } = await supabase
+            .from('bookmarks')
+            .select('*')
+            .eq('user_id', session.user.id)
+            .order('categories', { ascending: true })
+
+        console.log(data, error)
+        bookmarks = data
+
+    }
+
+    console.log(bookmarks)
+    // const { bookmarks } = useToggleContext()
 
     // console.log(bookmarks)
 

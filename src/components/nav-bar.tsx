@@ -1,8 +1,8 @@
+'use client'
 import { useState, useEffect } from "react";
 import { ModeToggle } from "./theme-toggle";
 import { Badge } from "./ui/badge";
 import { GetUserName } from "./User";
-
 
 export default function Navbar() {
 

@@ -1,8 +1,5 @@
-"use client"
 
-import { BookmarkProvider } from "@/context/app-context";
 import { Sidebar } from "../../components/sidebar";
-import { ModeToggle } from "@/components/theme-toggle";
 import DialogForm from "@/components/dialog-form";
 import Navbar from "@/components/nav-bar";
 import DialogLogin from "@/components/dialog-login-again";

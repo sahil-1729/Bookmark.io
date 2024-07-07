@@ -1,11 +1,11 @@
-'use client'
+'use server'
 import { Sidebar } from "@/components/sidebar";
 import DialogForm from "@/components/dialog-form";
 import Card from "@/components/card";
-import { useEffect, useState } from "react";
 import Navbar from "@/components/nav-bar";
 import DialogLogin from "@/components/dialog-login-again";
-export default function Timeline() {
+import FormDialog from "@/components/form";
+export default async function Timeline() {
 
   return (
     // <BookmarkProvider >
