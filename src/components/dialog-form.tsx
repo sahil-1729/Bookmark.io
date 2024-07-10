@@ -31,7 +31,6 @@ import { useState } from "react"
 import clsx from 'clsx';
 
 import { formInterface, setBookmark } from "@/types"
-import { useToggleContext } from "@/context/app-context"
 
 import { sendData } from "../server-actions/addBookmark"
 
@@ -52,7 +51,6 @@ export default function DialogForm() {
     // 1. Define your form.
     const [check, setCheck] = useState(false)
     const [formData, setForm] = useState<formInterface>()
-    const [link, setLink] = useState<string>("")
 
     var form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
@@ -74,10 +72,6 @@ export default function DialogForm() {
         // console.log('success ', values)
         setForm(values)
         form.reset()
-
-        const addBookmarks = [...bookmarks, values]
-        setBookmarks(addBookmarks)
-        console.log(addBookmarks)
 
         updateUserWithId({ formData: values, path: pathname })
 
