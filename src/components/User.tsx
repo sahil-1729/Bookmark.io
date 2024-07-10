@@ -9,7 +9,7 @@ export async function GetUserName() {
   // if (session && user) {
   //   return undefined
   // }
-  if (user) {
+  if (user && user.email) {
     const index = user.email.indexOf('@');
     const name = user.email.slice(0, index);
     return name;
