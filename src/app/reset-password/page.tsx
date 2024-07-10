@@ -6,7 +6,7 @@ import { redirect } from 'next/navigation';
 export default async function ResetPassword({
     searchParams,
 }: {
-    searchParams: { message: string } | { code: string };
+    searchParams: { message: string, code: string };
 }) {
     const resetPassword = async (formData: FormData) => {
         'use server'
