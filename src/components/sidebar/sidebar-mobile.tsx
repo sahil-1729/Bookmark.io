@@ -63,7 +63,7 @@ export function SidebarMobile(props: SidebarMobileProps) {
                     <Separator className='bg-primary my-4' orientation="horizontal" />
 
                     <div className='flex flex-col gap-1 w-full'>
-                        {uniqueBookmarks.sort((a: string, b: string) => { return a > b }).map((category: string, index: number) => {
+                        {uniqueBookmarks.sort().map((category: string, index: number) => {
                             return (
                                 <Link key={index} href='#'>
                                     <SidebarButton

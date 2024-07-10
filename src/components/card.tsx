@@ -25,7 +25,7 @@ export default async function Card() {
 
     }
 
-    console.log(bookmarks)
+    // console.log(bookmarks)
 
     if (bookmarks) {
         return bookmarks.length <= 0 ? <div className="bg-background p-4 border-primary border rounded-md flex flex-col gap-4 mx-4 mb-4 md:mb-8 ">
