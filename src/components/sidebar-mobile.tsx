@@ -29,7 +29,7 @@ export function SidebarMobile(props: SidebarMobileProps) {
     const { bookmarks } = useToggleContext()
 
     const uniqueBookmarks = bookmarks && uniq(bookmarks.map((val: formInterface) => val.categories))
-    console.log('unique - ', uniqueBookmarks)
+    // console.log('unique - ', uniqueBookmarks)
 
     return (
         <Sheet>

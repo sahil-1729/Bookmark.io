@@ -1,5 +1,5 @@
 "use client"
-
+import { usePathname } from 'next/navigation'
 import { ZodType, z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
@@ -33,7 +33,7 @@ import clsx from 'clsx';
 import { formInterface, setBookmark } from "@/types"
 import { useToggleContext } from "@/context/app-context"
 
-import { sendData } from "./send-data"
+import { sendData } from "../server-actions/addBookmark"
 
 const formSchema: ZodType<formInterface> = z.object({
     labels: z.string().min(2, {
@@ -65,6 +65,10 @@ export default function DialogForm() {
             link: "",
         },
     })
+
+    const pathname = usePathname()
+    const updateUserWithId = sendData.bind(null)
+
     // 2. Define a submit handler.
     function onSubmit(values: z.infer<typeof formSchema>) {
         //THIS FUNCTION WILL BE EXECUTED ONLY AFTER BEING VALIDATED BY ZOD 
@@ -78,19 +82,17 @@ export default function DialogForm() {
         setBookmarks(addBookmarks)
         console.log(addBookmarks)
 
-        updateUserWithId(values)
+        updateUserWithId({ formData: values, path: pathname })
 
         shift()
     }
-
-    const updateUserWithId = sendData.bind(null)
 
     function shift() {
         const shift: boolean = !check
         setCheck(shift)
     }
 
-    console.log('the value ', form.watch('link'))
+    // console.log('the value ', form.watch('link'))
 
     return (
         <Dialog open={check}>

@@ -18,7 +18,7 @@ export function SidebarDesktop(props: SidebarDesktopProps) {
   const { bookmarks } = useToggleContext()
 
   const uniqueBookmarks = bookmarks && uniq(bookmarks.map((val: formInterface) => val.categories))
-  console.log('unique - ', uniqueBookmarks)
+  // console.log('unique - ', uniqueBookmarks)
 
   return (
     // <aside className='w-[270px] max-w-xs h-screen fixed left-0 top-0 z-40 border-r'>
