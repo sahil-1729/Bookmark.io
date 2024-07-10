@@ -15,7 +15,6 @@ import { SidebarButtonSheet as SidebarButton } from './sidebar-button';
 import { usePathname } from 'next/navigation';
 import { Separator } from '../ui/separator';
 import { uniq } from 'lodash';
-import { useToggleContext } from '@/context/app-context';
 
 interface SidebarMobileProps {
     sidebarItems: SidebarItems;
