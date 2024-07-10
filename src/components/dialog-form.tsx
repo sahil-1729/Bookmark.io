@@ -105,7 +105,7 @@ export default function DialogForm() {
                     <DialogTitle>Add bookmark
                     </DialogTitle>
                     <DialogDescription>
-                        Don't worry, we'll save you the trouble of finding this frustration again
+                        Don&apos;t worry, we&apos;ll save you the trouble of finding this frustration again
                     </DialogDescription>
                 </DialogHeader>
                 <DialogClose className="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground">
@@ -124,7 +124,7 @@ export default function DialogForm() {
                                         <Input placeholder="CTRL + V" className="" {...field} />
                                     </FormControl>
                                     <FormDescription>
-                                        Copy, paste, pray it doesn't change (it probably will).
+                                        Copy, paste, pray it doesn&apos;t change (it probably will).
                                     </FormDescription>
                                     <FormMessage />
                                 </FormItem>
