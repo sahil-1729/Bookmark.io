@@ -19,4 +19,13 @@ export type ServerActionReponse = {
     status: string;
     message: string;
 };
+export type fetchBookmark = {
+    user_id: string,
+    email: string,
+    categories: string,
+    labels: string,
+    created_at: string,
+    updated_at: string | null,
+    id: string
+}
 export type setBookmark = React.Dispatch<React.SetStateAction<formInterface[]>>;

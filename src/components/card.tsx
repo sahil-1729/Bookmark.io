@@ -2,6 +2,7 @@
 
 import { Button } from "./ui/button"
 import { createClient } from "@/utils/supabase/server"
+import { fetchBookmark } from "@/types"
 
 type bookmarkData = {
     link: string,
@@ -11,7 +12,7 @@ type bookmarkData = {
 
 export default async function Card() {
 
-    var bookmarks = []
+    var bookmarks: [] | fetchBookmark[] = []
     const supabase = createClient()
     const { data: { session }, error } = await supabase.auth.getSession()
 
@@ -30,7 +31,7 @@ export default async function Card() {
 
     }
 
-    // console.log(bookmarks)
+    console.log(bookmarks)
 
     return bookmarks.length <= 0 ? <div className="bg-background p-4 border-primary border rounded-md flex flex-col gap-4 mx-4 mb-4 md:mb-8 ">
         <h5 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl">Looks like nothing here ...</h5>

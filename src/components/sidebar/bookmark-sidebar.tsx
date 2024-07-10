@@ -2,10 +2,11 @@
 
 import { createClient } from "@/utils/supabase/server"
 import { Sidebar } from "./sidebar"
+import { fetchBookmark } from "@/types"
 
 export default async function BookmarkSidebar() {
 
-    var bookmarks = []
+    var bookmarks: [] | fetchBookmark[] = []
     const supabase = createClient()
     const { data: { session }, error } = await supabase.auth.getSession()
 

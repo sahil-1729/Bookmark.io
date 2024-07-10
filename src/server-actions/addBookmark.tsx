@@ -13,8 +13,6 @@ type data = {
     link: string
 }
 
-
-
 export async function sendData({ formData, path }: props) {
     console.log('The recieved data ', formData)
     const supabase = createClient()

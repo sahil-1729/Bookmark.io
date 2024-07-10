@@ -49,9 +49,6 @@ const formSchema: ZodType<formInterface> = z.object({
 
 export default function DialogForm() {
 
-    // const [bookmark, setBookmark] = useState<formInterface[]>(a)
-    const { bookmarks, setBookmarks } = useToggleContext()
-
     // 1. Define your form.
     const [check, setCheck] = useState(false)
     const [formData, setForm] = useState<formInterface>()
