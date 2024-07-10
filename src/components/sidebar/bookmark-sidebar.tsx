@@ -6,7 +6,7 @@ import { fetchBookmark } from "@/types"
 
 export default async function BookmarkSidebar() {
 
-    var bookmarks: [] | fetchBookmark[] = []
+    var bookmarks: fetchBookmark[] | null = []
     const supabase = createClient()
     const { data: { session }, error } = await supabase.auth.getSession()
 
@@ -21,9 +21,13 @@ export default async function BookmarkSidebar() {
             .order('created_at', { ascending: false })
 
         // console.log(data, error)
-        bookmarks = data
+        const result: fetchBookmark[] | null = data
+        bookmarks = result
     }
-    const categories = bookmarks.map(val => val.categories)
-    console.log(categories)
-    return <Sidebar categories={categories} />
+    if (bookmarks) {
+        const categories = bookmarks.map(val => val.categories)
+        console.log(categories)
+        return <Sidebar categories={categories} />
+    }
+    return;
 }

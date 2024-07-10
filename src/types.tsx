@@ -20,6 +20,7 @@ export type ServerActionReponse = {
     message: string;
 };
 export type fetchBookmark = {
+    link: any;
     user_id: string,
     email: string,
     categories: string,
