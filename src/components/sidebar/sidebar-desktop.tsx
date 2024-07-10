@@ -4,20 +4,20 @@ import { SidebarButton } from './sidebar-button';
 import { formInterface, SidebarItems } from '@/types';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Separator } from './ui/separator';
+import { Separator } from '../ui/separator';
 import { useToggleContext } from '@/context/app-context';
 import { Folder } from 'lucide-react';
 import { uniq, sortedUniqBy } from 'lodash'
 
 interface SidebarDesktopProps {
-  sidebarItems: SidebarItems;
+  sidebarItems: SidebarItems,
+  categories: Array<string>
 }
 
 export function SidebarDesktop(props: SidebarDesktopProps) {
   const pathname = usePathname();
-  const { bookmarks } = useToggleContext()
 
-  const uniqueBookmarks = bookmarks && uniq(bookmarks.map((val: formInterface) => val.categories))
+  const uniqueBookmarks = props.categories && uniq(props.categories)
   // console.log('unique - ', uniqueBookmarks)
 
   return (

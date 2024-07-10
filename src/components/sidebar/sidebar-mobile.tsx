@@ -7,28 +7,25 @@ import {
     SheetContent,
     SheetHeader,
     SheetTrigger,
-} from './ui/sheet';
-import { Button } from './ui/button';
-import { Folder, LogOut, Menu, MoreHorizontal, Settings, X } from 'lucide-react';
+} from '../ui/sheet';
+import { Button } from '../ui/button';
+import { Folder, Menu, X } from 'lucide-react';
 import Link from 'next/link';
 import { SidebarButtonSheet as SidebarButton } from './sidebar-button';
 import { usePathname } from 'next/navigation';
-import { Separator } from './ui/separator';
+import { Separator } from '../ui/separator';
 import { uniq } from 'lodash';
 import { useToggleContext } from '@/context/app-context';
 
-// import { Drawer, DrawerContent, DrawerTrigger } from './ui/drawer';
-// import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
-
 interface SidebarMobileProps {
     sidebarItems: SidebarItems;
+    categories: Array<string>
 }
 
 export function SidebarMobile(props: SidebarMobileProps) {
     const pathname = usePathname();
-    const { bookmarks } = useToggleContext()
 
-    const uniqueBookmarks = bookmarks && uniq(bookmarks.map((val: formInterface) => val.categories))
+    const uniqueBookmarks = props.categories && uniq(props.categories)
     // console.log('unique - ', uniqueBookmarks)
 
     return (
