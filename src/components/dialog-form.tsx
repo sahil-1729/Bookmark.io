@@ -126,7 +126,7 @@ export default function DialogForm() {
                             name="labels"
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel>Labels</FormLabel>
+                                    <FormLabel>Context</FormLabel>
                                     <FormControl>
                                         <Input placeholder="link associated to which topic?" className="" {...field} />
                                     </FormControl>
