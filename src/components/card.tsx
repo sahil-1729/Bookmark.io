@@ -4,6 +4,24 @@ import { Button } from "./ui/button"
 import { createClient } from "@/utils/supabase/server"
 import { fetchBookmark } from "@/types"
 
+import getMetaData from 'metadata-scraper'
+import { metadata } from "@/app/layout"
+
+export async function GetData(link: string) {
+    // const getMetaData = require('metadata-scraper')
+
+    // async function run() {
+    const url = link
+    try {
+        const data = await getMetaData(url)
+        return data.title
+    } catch (e) {
+        // console.log(e)
+    }
+    // console.log(data)
+    // }
+}
+
 export default async function Card() {
 
     var bookmarks: fetchBookmark[] | null = []
@@ -21,11 +39,21 @@ export default async function Card() {
             .order('created_at', { ascending: false })
 
         // console.log(data, error)
-        bookmarks = data
+        if (data) {
+
+            bookmarks = await Promise.all(data.map(async val => {
+                const link = await GetData(val.link)
+                if (link) {
+                    const res = { ...val, metadata: link }
+                    // console.log(res)
+                    return res
+                }
+                return { ...val, metadata: "Untitled" }
+            }))
+            // console.log(temp)
+        }
 
     }
-
-    // console.log(bookmarks)
 
     if (bookmarks) {
         return bookmarks.length <= 0 ? <div className="bg-background p-4 border-primary border rounded-md flex flex-col gap-4 mx-4 mb-4 md:mb-8 ">
@@ -40,7 +68,9 @@ export default async function Card() {
 
             return (
                 <div key={key} className="bg-background p-4 border-primary border rounded-md flex flex-col gap-4 mx-4 mb-4 md:mb-8 ">
-                    <a href={val.link} target="_blank" className="scroll-m-20 text-2xl font-semibold tracking-tight break-all lg:text-4xl">{val.link}</a>
+                    <a href={val.link} target="_blank" className="scroll-m-20 text-2xl font-semibold tracking-tight break-all lg:text-4xl">{val.metadata === "untitled" ? val.link : val.metadata}</a>
+                    <a href={val.link} target="_blank" className="text-sm font-medium leading-none break-all">{val.link}</a>
+
                     <Button variant="outline" size="sm" className="max-w-max">{val.categories}</Button>
                     <div className="border-primary border px-2 py-1 max-w-max rounded-lg">
                         {val.labels}
@@ -49,5 +79,5 @@ export default async function Card() {
             )
         })
     }
-    return
+    return <>Something went wrong</>
 } 
