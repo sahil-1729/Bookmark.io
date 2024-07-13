@@ -14,7 +14,7 @@ export async function GetData(link: string) {
     const url = link
     try {
         const data = await getMetaData(url)
-        console.log(data.title)
+        console.log('api ', data.title)
         return data.title
     } catch (e) {
         // console.log(e)
@@ -45,6 +45,7 @@ export default async function Card() {
             bookmarks = await Promise.all(data.map(async val => {
                 const link = await GetData(val.link)
                 if (link) {
+                    console.log('card ', link)
                     const res = { ...val, metadata: link }
                     // console.log(res)
                     return res
