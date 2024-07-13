@@ -5,7 +5,7 @@ import { createClient } from "@/utils/supabase/server"
 import { fetchBookmark } from "@/types"
 
 import getMetaData from 'metadata-scraper'
-import { metadata } from "@/app/layout"
+import { Trash } from "lucide-react"
 
 export async function GetData(link: string) {
     // const getMetaData = require('metadata-scraper')
@@ -14,6 +14,7 @@ export async function GetData(link: string) {
     const url = link
     try {
         const data = await getMetaData(url)
+        console.log(data.title)
         return data.title
     } catch (e) {
         // console.log(e)
@@ -68,7 +69,10 @@ export default async function Card() {
 
             return (
                 <div key={key} className="bg-background p-4 border-primary border rounded-md flex flex-col gap-4 mx-4 mb-4 md:mb-8 ">
-                    <a href={val.link} target="_blank" className="scroll-m-20 text-2xl font-semibold tracking-tight break-all lg:text-4xl">{val.metadata === "untitled" ? val.link : val.metadata}</a>
+                    <div className="flex justify-between">
+                        <a href={val.link} target="_blank" className="scroll-m-20 text-2xl font-semibold tracking-tight break-all lg:text-4xl">{val.metadata}</a>
+                        <Button size='sm' >< Trash size={16} /></Button>
+                    </div>
                     <a href={val.link} target="_blank" className="text-sm font-medium leading-none break-all">{val.link}</a>
 
                     <Button variant="outline" size="sm" className="max-w-max">{val.categories}</Button>
