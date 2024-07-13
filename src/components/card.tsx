@@ -9,7 +9,7 @@ import { Trash } from "lucide-react"
 
 export async function GetData(link: string) {
     // const getMetaData = require('metadata-scraper')
-
+    console.log('getData link -', link)
     // async function run() {
     const url = link
     try {
@@ -17,7 +17,7 @@ export async function GetData(link: string) {
         console.log('api ', data.title)
         return data.title
     } catch (e) {
-        // console.log(e)
+        console.log(e)
     }
     // console.log(data)
     // }
@@ -44,15 +44,16 @@ export default async function Card() {
 
             bookmarks = await Promise.all(data.map(async val => {
                 const link = await GetData(val.link)
+                console.log('card ', link)
+
                 if (link) {
-                    console.log('card ', link)
                     const res = { ...val, metadata: link }
                     // console.log(res)
                     return res
                 }
                 return { ...val, metadata: "Untitled" }
             }))
-            // console.log(temp)
+            console.log(bookmarks)
         }
 
     }
