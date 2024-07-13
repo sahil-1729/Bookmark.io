@@ -9,7 +9,7 @@ import { Trash } from "lucide-react"
 
 export async function GetData(link: string) {
     // const getMetaData = require('metadata-scraper')
-    console.log('getData link -', link)
+
     // async function run() {
     const url = link
     try {
@@ -53,7 +53,7 @@ export default async function Card() {
                 }
                 return { ...val, metadata: "Untitled" }
             }))
-            console.log(bookmarks)
+
         }
 
     }
