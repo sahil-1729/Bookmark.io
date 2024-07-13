@@ -26,7 +26,7 @@ export default async function BookmarkSidebar() {
     }
     if (bookmarks) {
         const categories = bookmarks.map(val => val.categories)
-        console.log(categories)
+        // console.log(categories)
         return <Sidebar categories={categories} />
     }
     return;

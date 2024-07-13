@@ -24,7 +24,7 @@ export async function sendData({ formData, path }: props) {
             .insert({ user_id: user?.id, email: user?.email, categories: formData.categories, labels: formData.labels, link: formData.link })
         console.log(error)
     }
-    //removes the cached data on the specified path, thus refetching the data on that page
+    //removes the cached data on the specified path, thus refetching the data on that page for server components
     revalidatePath(`/${path}`)
     // return formData
 }

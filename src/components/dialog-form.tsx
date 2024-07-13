@@ -1,5 +1,5 @@
 "use client"
-import { usePathname } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import { ZodType, z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
@@ -64,6 +64,8 @@ export default function DialogForm() {
     const pathname = usePathname()
     const updateUserWithId = sendData.bind(null)
 
+    // const router = useRouter()
+
     // 2. Define a submit handler.
     function onSubmit(values: z.infer<typeof formSchema>) {
         //THIS FUNCTION WILL BE EXECUTED ONLY AFTER BEING VALIDATED BY ZOD 
@@ -74,6 +76,8 @@ export default function DialogForm() {
         form.reset()
 
         updateUserWithId({ formData: values, path: pathname })
+
+        // router.refresh()
 
         shift()
     }

@@ -5,6 +5,10 @@ import { createClient } from "@/utils/supabase/server"
 import { fetchBookmark } from "@/types"
 import urlMetadata from 'url-metadata'
 import { Trash } from "lucide-react"
+import deleteBookmark from "../server-actions/deleteBookmark"
+import { revalidatePath } from "next/cache"
+import CardClient from "./card-client"
+
 
 const options = {
     // custom request headers
@@ -49,13 +53,11 @@ export async function GetData(link: string) {
     const url = link
     try {
         const metadata = await urlMetadata(url);
-        console.log(metadata)
-        // const data = await getMetaData(url)
-        // console.log('api ', data.title)
+        // console.log(metadata)
+
         return metadata.title
-        // return ""
     } catch (e) {
-        console.log(e)
+        // console.log(e)
     }
     return null
 
@@ -84,7 +86,7 @@ export default async function Card() {
 
             bookmarks = await Promise.all(data.map(async val => {
                 const link = await GetData(val.link)
-                console.log('card ', link)
+                // console.log('card ', link)
 
                 if (link) {
                     const res = { ...val, metadata: link }
@@ -98,7 +100,19 @@ export default async function Card() {
 
     }
 
+    async function deleteB(data: any) {
+        "use server"
+        const bookmarkId = data.get('id')
+        console.log(data.get('id'))
+        await deleteBookmark({ bookmarkId: bookmarkId })
+
+        revalidatePath('/timeline')
+
+    }
+
     if (bookmarks) {
+        // return <CardClient bookmarkList={bookmarks} deleteB={deleteB} />
+
         return bookmarks.length <= 0 ? <div className="bg-background p-4 border-primary border rounded-md flex flex-col gap-4 mx-4 mb-4 md:mb-8 ">
             <h5 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl">Looks like nothing here ...</h5>
             <Button variant="outline" size="sm" className="max-w-max">Click on the add icon</Button>
@@ -111,9 +125,13 @@ export default async function Card() {
 
             return (
                 <div key={key} className="bg-background p-4 border-primary border rounded-md flex flex-col gap-4 mx-4 mb-4 md:mb-8 ">
+                    {/* <AlertDialogDemo /> */}
                     <div className="flex justify-between">
                         <a href={val.link} target="_blank" className="scroll-m-20 text-2xl font-semibold tracking-tight break-all lg:text-4xl">{val.metadata}</a>
-                        <Button size='sm' >< Trash size={16} /></Button>
+                        <form action={deleteB} >
+                            <input name='id' className="hidden" defaultValue={val.id} />
+                            <Button size='sm' >< Trash size={16} /></Button>
+                        </form>
                     </div>
                     <a href={val.link} target="_blank" className="text-sm font-medium leading-none break-all">{val.link}</a>
 

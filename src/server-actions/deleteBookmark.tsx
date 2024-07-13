@@ -2,26 +2,31 @@
 'use server'
 import { createClient } from "@/utils/supabase/server"
 import { revalidatePath } from "next/cache"
-import { fetchBookmark } from "@/types"
 
 interface props {
-    bookmark: fetchBookmark,
-    path: string
+    bookmarkId: string,
+    // path: string
 }
 
-export async function sendData({ bookmark }: props) {
-    console.log('The recieved data ', bookmark)
+export default async function deleteData({ bookmarkId }: props) {
+    console.log('The recieved data ', bookmarkId)
 
     const supabase = createClient()
+    const { data: { user } } = await supabase.auth.getUser()
 
-    if (bookmark) {
-        const response = await supabase
-            .from('bookamrks')
+    if (bookmarkId && user) {
+        const { error } = await supabase
+            .from('bookmarks')
             .delete()
-            .eq('id', bookmark.id)
-        console.log(response)
-    }
+            .match({ id: bookmarkId, user_id: user.id })
 
-    revalidatePath(`/timeline`)
+        if (error) {
+            console.error('Error deleting data', error)
+            return;
+        }
+    }
+    // console.log(path)
+    //here it didn't work bc it was revalidating path before the bookmark was deleted
+    // revalidatePath(`/`)
 
 }
