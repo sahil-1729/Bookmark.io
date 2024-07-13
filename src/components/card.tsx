@@ -7,45 +7,6 @@ import urlMetadata from 'url-metadata'
 import { Trash } from "lucide-react"
 import deleteBookmark from "../server-actions/deleteBookmark"
 import { revalidatePath } from "next/cache"
-import CardClient from "./card-client"
-
-
-const options = {
-    // custom request headers
-    requestHeaders: {
-        'User-Agent': 'url-metadata/3.0 (npm module)',
-        'From': 'example@example.com'
-    },
-
-    // `fetch` API cache setting for request
-    cache: 'no-cache',
-
-    // `fetch` API mode (ex: 'cors', 'no-cors', 'same-origin', etc)
-    mode: 'cors',
-
-    // charset to decode response with (ex: 'auto', 'utf-8', 'EUC-JP')
-    // defaults to auto-detect in `Content-Type` header or meta tag
-    // if none found, default `auto` option falls back to `utf-8`
-    // override by passing in charset here (ex: 'windows-1251'):
-    decode: 'auto',
-
-    // timeout in milliseconds, default is 10 seconds
-    timeout: 10000,
-
-    // number of characters to truncate description to
-    descriptionLength: 750,
-
-    // force image urls in selected tags to use https,
-    // valid for images & favicons with full paths
-    ensureSecureImageRequest: true,
-
-    // return raw response body as string
-    includeResponseBody: false,
-
-    // alternate use-case: pass in `Response` object here to be parsed
-    // see example below
-    parseResponseObject: null,
-};
 
 export async function GetData(link: string) {
 
@@ -111,7 +72,6 @@ export default async function Card() {
     }
 
     if (bookmarks) {
-        // return <CardClient bookmarkList={bookmarks} deleteB={deleteB} />
 
         return bookmarks.length <= 0 ? <div className="bg-background p-4 border-primary border rounded-md flex flex-col gap-4 mx-4 mb-4 md:mb-8 ">
             <h5 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl">Looks like nothing here ...</h5>
@@ -125,7 +85,6 @@ export default async function Card() {
 
             return (
                 <div key={key} className="bg-background p-4 border-primary border rounded-md flex flex-col gap-4 mx-4 mb-4 md:mb-8 ">
-                    {/* <AlertDialogDemo /> */}
                     <div className="flex justify-between">
                         <a href={val.link} target="_blank" className="scroll-m-20 text-2xl font-semibold tracking-tight break-all lg:text-4xl">{val.metadata}</a>
                         <form action={deleteB} >

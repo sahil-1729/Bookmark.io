@@ -5,7 +5,6 @@ import { revalidatePath } from "next/cache"
 
 interface props {
     bookmarkId: string,
-    // path: string
 }
 
 export default async function deleteData({ bookmarkId }: props) {
@@ -25,7 +24,7 @@ export default async function deleteData({ bookmarkId }: props) {
             return;
         }
     }
-    // console.log(path)
+
     //here it didn't work bc it was revalidating path before the bookmark was deleted
     // revalidatePath(`/`)
 
