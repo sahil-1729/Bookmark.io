@@ -17,11 +17,15 @@ export default function ToggleVisit({ id, visited }: props) {
     const [border, setBorder] = useState(visited)
 
 
-    return <Toggle className={clsx('', {
+    return <Toggle className={clsx('flex items-center', {
         'border-primary border-2': border
     })} defaultPressed={visited ? visited : false} onPressedChange={(pressed) => {
         setBorder(pressed)
         updateVisitedWithId({ bookmarkId: id, visited: pressed })
         // console.log(pressed)
-    }} > visited &nbsp; <BookOpenCheck /></Toggle>
+    }} >
+        <div>
+            visited
+        </div>
+        &nbsp; <BookOpenCheck /></Toggle>
 }

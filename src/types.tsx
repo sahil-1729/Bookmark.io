@@ -10,9 +10,10 @@ export interface SidebarItems {
     extras?: ReactNode;
 }
 export interface formInterface {
-    labels: string,
+    labels: any,
     categories: string,
-    link: string
+    link: string,
+    // topics: any
 }
 export type ServerActionReponse = {
     statusCode: number;

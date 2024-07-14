@@ -2,7 +2,7 @@
 import { usePathname, useRouter } from 'next/navigation'
 import { ZodType, z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
+import { Controller, useForm } from "react-hook-form"
 import { Button } from "@/components/ui/button"
 import {
     Form,
@@ -27,23 +27,31 @@ import {
 
 } from "@/components/ui/dialog"
 import { CirclePlus, X } from 'lucide-react';
-import { useState } from "react"
+import { SetStateAction, useState } from "react"
 import clsx from 'clsx';
 
 import { formInterface } from "@/types"
 
 import { sendData } from "../server-actions/addBookmark"
+import { Tag, TagInput } from 'emblor';
+import { cn } from '@/lib/utils'
 
 const formSchema: ZodType<formInterface> = z.object({
-    labels: z.string().min(2, {
-        message: "label must be at least 2 characters.",
-    }).max(50),
+    // labels: z.string().min(2, {
+    //     message: "label must be at least 2 characters.",
+    // }).max(50),
     categories: z.string().min(2, {
         message: "categories must be at least 2 characters.",
     }).max(50),
     link: z.string().min(2, {
         message: "link must be at least 2 characters.",
-    }).max(1000).url({ message: "Invalid url" })
+    }).max(1000).url({ message: "Invalid url" }),
+    labels: z.array(
+        z.object({
+            id: z.string(),
+            text: z.string(),
+        }),
+    ),
 })
 
 export default function DialogForm() {
@@ -52,12 +60,16 @@ export default function DialogForm() {
     const [check, setCheck] = useState(false)
     const [formData, setForm] = useState<formInterface>()
 
+    const [tags, setTags] = useState<Tag[]>([]);
+    const [activeTagIndex, setActiveTagIndex] = useState<number | null>(null);
+
     var form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
-            labels: "",
+            // labels: "",
             categories: "",
             link: "",
+            labels: []
         },
     })
 
@@ -70,9 +82,9 @@ export default function DialogForm() {
         // if failed to validate then the function wont execute 
 
         // console.log('success ', values)
-        setForm(values)
+        // setForm(values)
         form.reset()
-
+        setTags([])
         updateUserWithId({ formData: values, path: pathname })
 
         shift()
@@ -82,6 +94,7 @@ export default function DialogForm() {
         const shift: boolean = !check
         setCheck(shift)
     }
+
 
     // console.log('the value ', form.watch('link'))
 
@@ -123,7 +136,8 @@ export default function DialogForm() {
                                 </FormItem>
                             )}
                         />
-                        <FormField
+
+                        {/* <FormField
                             control={form.control}
                             name="labels"
                             render={({ field }) => (
@@ -138,7 +152,7 @@ export default function DialogForm() {
                                     <FormMessage />
                                 </FormItem>
                             )}
-                        />
+                        /> */}
                         <FormField
                             control={form.control}
                             name="categories"
@@ -150,6 +164,76 @@ export default function DialogForm() {
                                     </FormControl>
                                     <FormDescription>
                                         Helping you to organize your bookmarks
+                                    </FormDescription>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+
+                        <FormField
+                            control={form.control}
+                            name="labels"
+                            render={({ field }) => (
+                                <FormItem className="flex flex-col items-start">
+                                    <FormLabel className="text-left">Context</FormLabel>
+                                    <FormControl className="max-w-full">
+
+                                        <TagInput
+
+                                            customTagRenderer={
+                                                (tag, isActiveTag) => (<
+                                                    div key={
+                                                        tag.id
+                                                    }
+                                                    className={
+                                                        `px-2 py-1 bg-primary rounded-full ${isActiveTag ? "ring-ring ring-offset-2 ring-2 ring-offset-background" : ""}`
+                                                    } >
+                                                    <span className="text-white text-sm mr-1 flex flex-row" >
+                                                        {
+                                                            tag.text
+                                                        }
+                                                        <Button
+                                                            type="button"
+                                                            variant="ghost"
+                                                            onClick={(e) => {
+                                                                e.stopPropagation(); // Prevent event from bubbling up to the tag span
+                                                                // onRemoveTag(tag.id);
+                                                                const res = tags.filter(val => val.id != tag.id)
+                                                                setTags(res)
+                                                                form.setValue('labels', res as [Tag, ...Tag[]])
+                                                            }}
+                                                            className={cn('py-1 px-1 h-full hover:bg-transparent')}
+                                                        >
+                                                            <X size={14} />
+                                                        </Button>
+                                                    </span>
+                                                </div>
+                                                )
+                                            }
+
+                                            // direction={'row'}
+                                            showCount={true}
+                                            // maxTags={3}
+                                            // truncate={tags.length}
+
+                                            variant={{
+                                                variant: "primary",
+                                                shape: "rounded",
+                                            }}
+
+                                            activeTagIndex={activeTagIndex} setActiveTagIndex={setActiveTagIndex} {...field}
+                                            placeholder="link associated to which topic?"
+                                            tags={tags}
+
+                                            className="resize-y flex flex-wrap"
+                                            setTags={(newTags) => {
+                                                console.log(newTags)
+                                                setTags(newTags)
+                                                form.setValue('labels', newTags as [Tag, ...Tag[]])
+                                            }} />
+                                    </FormControl>
+                                    <FormDescription className="text-left">
+                                        Just so you dont forget why you add it :{")"}
                                     </FormDescription>
                                     <FormMessage />
                                 </FormItem>

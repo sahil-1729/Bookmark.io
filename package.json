@@ -24,6 +24,7 @@
     "@supabase/supabase-js": "^2.44.2",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
+    "emblor": "^1.4.0",
     "lodash": "^4.17.21",
     "lodash.uniq": "^4.5.0",
     "lucide-react": "^0.399.0",

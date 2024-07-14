@@ -10,8 +10,12 @@ interface props {
 }
 type data = {
     categories: string,
-    labels: string,
+    labels: [] | labelData[],
     link: string
+}
+type labelData = {
+    id: string,
+    text: string
 }
 
 export async function sendData({ formData, path }: props) {
@@ -20,13 +24,21 @@ export async function sendData({ formData, path }: props) {
     const { data: { user } } = await supabase.auth.getUser()
 
     if (formData) {
+
+        const bulkQuery = formData.labels.map(val => {
+            return { user_id: user?.id, email: user?.email, categories: formData.categories, labels: val.text, link: formData.link }
+        })
+        console.log(bulkQuery)
         const { error } = await supabase
             .from('bookmarks')
-            .insert({ user_id: user?.id, email: user?.email, categories: formData.categories, labels: formData.labels, link: formData.link })
+            .insert(bulkQuery)
         console.log(error)
     }
+
     //removes the cached data on the specified path, thus refetching the data on that page for server components
     // revalidatePath(`/${path}`)
+
     redirect('/timeline')
+
     // return formData
 }
