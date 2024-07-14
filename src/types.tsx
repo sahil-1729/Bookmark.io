@@ -29,5 +29,6 @@ export type fetchBookmark = {
     updated_at: string | null,
     id: string,
     metadata?: string
+    visited?: boolean
 }
 export type setBookmark = React.Dispatch<React.SetStateAction<formInterface[]>>;
