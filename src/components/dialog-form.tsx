@@ -30,7 +30,7 @@ import { CirclePlus, X } from 'lucide-react';
 import { useState } from "react"
 import clsx from 'clsx';
 
-import { formInterface, setBookmark } from "@/types"
+import { formInterface } from "@/types"
 
 import { sendData } from "../server-actions/addBookmark"
 
@@ -64,8 +64,6 @@ export default function DialogForm() {
     const pathname = usePathname()
     const updateUserWithId = sendData.bind(null)
 
-    // const router = useRouter()
-
     // 2. Define a submit handler.
     function onSubmit(values: z.infer<typeof formSchema>) {
         //THIS FUNCTION WILL BE EXECUTED ONLY AFTER BEING VALIDATED BY ZOD 
@@ -76,8 +74,6 @@ export default function DialogForm() {
         form.reset()
 
         updateUserWithId({ formData: values, path: pathname })
-
-        // router.refresh()
 
         shift()
     }
@@ -91,10 +87,12 @@ export default function DialogForm() {
 
     return (
         <Dialog open={check}>
-            <DialogTrigger ><CirclePlus onClick={() => {
-                shift()
-                form.reset()
-            }} className="right-12 bottom-12 fixed" size={40} color="white" /></DialogTrigger>
+            <DialogTrigger >
+                <CirclePlus onClick={() => {
+                    shift()
+                    form.reset()
+                }} className="right-12 bottom-12 fixed " size={40} color="white" />
+            </DialogTrigger>
             <DialogContent className="primary sm:w-[32rem] sm:h-max w-full h-full">
                 <DialogHeader>
                     <DialogTitle>Add bookmark

@@ -9,6 +9,7 @@ import deleteBookmark from "../server-actions/deleteBookmark"
 import { revalidatePath } from "next/cache"
 import { Toggle } from "./ui/toggle"
 import ToggleVisit from "./toggleVisit"
+import { redirect } from "next/navigation"
 
 export async function GetData(link: string) {
 
@@ -69,18 +70,9 @@ export default async function Card() {
         console.log(data.get('id'))
         await deleteBookmark({ bookmarkId: bookmarkId })
 
-        revalidatePath('/timeline')
+        // revalidatePath('/timeline')
+        redirect('/timeline')
     }
-
-    async function updateVisited(data: any) {
-        "use server"
-        const bookmarkId = data.get('id')
-        console.log(data.get('id'))
-
-        revalidatePath('/timeline')
-    }
-
-
 
     if (bookmarks) {
 
