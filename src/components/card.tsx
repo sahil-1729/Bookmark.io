@@ -95,8 +95,13 @@ export default async function Card() {
 
                     <Button variant="outline" size="sm" className="max-w-max">{val.categories}</Button>
                     <div className="flex justify-between items-center">
-                        <div className="border-primary border px-2 py-1 max-w-max rounded-lg">
-                            {val.labels}
+
+                        <div className="flex flex-wrap gap-4">
+                            {val.labels ? val.labels.map((value, key) =>
+                                <div key={key} className="border-primary border px-2 py-1 max-w-max rounded-lg">
+                                    {value}
+                                </div>
+                            ) : ""}
                         </div>
                         <ToggleVisit id={val.id} visited={val.visited ? val.visited : false} />
                     </div>

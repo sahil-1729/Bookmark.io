@@ -25,7 +25,7 @@ export type fetchBookmark = {
     user_id: string,
     email: string,
     categories: string,
-    labels: string,
+    labels: Array<string>,
     created_at: string,
     updated_at: string | null,
     id: string,

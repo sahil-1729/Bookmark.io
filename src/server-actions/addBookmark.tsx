@@ -25,13 +25,11 @@ export async function sendData({ formData, path }: props) {
 
     if (formData) {
 
-        const bulkQuery = formData.labels.map(val => {
-            return { user_id: user?.id, email: user?.email, categories: formData.categories, labels: val.text, link: formData.link }
-        })
-        console.log(bulkQuery)
+        const labelsList = formData.labels.map(val => val.text)
+
         const { error } = await supabase
             .from('bookmarks')
-            .insert(bulkQuery)
+            .insert({ user_id: user?.id, email: user?.email, categories: formData.categories, labels: labelsList, link: formData.link })
         console.log(error)
     }
 
