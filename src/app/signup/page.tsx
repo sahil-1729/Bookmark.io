@@ -14,6 +14,7 @@ export default async function Signup({
 
     const signup = async (formData: FormData) => {
         'use server'
+        searchParams.message = ""
         const email = formData.get('email') as string
         const password = formData.get('password') as string
         const confirmpassword = formData.get('confirmPassword') as string
@@ -37,8 +38,9 @@ export default async function Signup({
         }
 
         const { data: { user } } = await supabase.auth.getUser()
-        // console.log(user.user_metadata.email_verified)
-        if (user && !user.user_metadata.email_verified) {
+        console.log(user?.user_metadata.email_verified)
+
+        if (user && user?.user_metadata.email_verified) {
             redirect('/timeline')
         } else {
             redirect(`/confirm?message= check your email - ${email} to continue sign in process`)

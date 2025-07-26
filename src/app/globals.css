@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 /* green */
-/* @layer base {
+@layer base {
   :root {
     --background: 80 30% 99%;
     --foreground: 80 56% 3%;
@@ -48,10 +48,10 @@
     --destructive-foreground: 0 0% 100%;
     --ring: 80 65% 39%;
   }
-} */
+}
 
 /* purple */
-@layer base {
+/* @layer base {
   :root {
     --background: 250 40% 98%;
     --foreground: 250 77% 3%;
@@ -96,4 +96,4 @@
     --destructive-foreground: 0 0% 100%;
     --ring: 250 86% 77%;
   }
-}
+} */

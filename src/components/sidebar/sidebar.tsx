@@ -41,7 +41,7 @@ const sidebarItems: SidebarItems = {
 };
 
 interface props {
-    categories: Array<string>
+    categories: Array<string> | []
 }
 export function Sidebar({ categories }: props) {
     const isDesktop = useMediaQuery('(min-width: 640px)', { 'initializeWithValue': false });

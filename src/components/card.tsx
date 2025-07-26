@@ -45,7 +45,7 @@ export default async function Card() {
             .eq('user_id', user.id)
             .order('created_at', { ascending: false })
 
-        // console.log(data, error)
+        console.log('bookmarks list', data, error)
         if (data) {
 
             bookmarks = await Promise.all(data.map(async val => {

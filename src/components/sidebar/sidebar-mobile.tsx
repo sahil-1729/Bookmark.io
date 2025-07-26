@@ -18,7 +18,7 @@ import { uniq } from 'lodash';
 
 interface SidebarMobileProps {
     sidebarItems: SidebarItems;
-    categories: Array<string>
+    categories: Array<string> | []
 }
 
 export function SidebarMobile(props: SidebarMobileProps) {
@@ -63,7 +63,7 @@ export function SidebarMobile(props: SidebarMobileProps) {
                     <Separator className='bg-primary my-4' orientation="horizontal" />
 
                     <div className='flex flex-col gap-1 w-full'>
-                        {uniqueBookmarks.sort().map((category: string, index: number) => {
+                        {uniqueBookmarks?.sort().map((category: string, index: number) => {
                             return (
                                 <Link key={index} href='#'>
                                     <SidebarButton

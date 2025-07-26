@@ -22,12 +22,16 @@ export default async function BookmarkSidebar() {
 
         // console.log(data, error)
         const result: fetchBookmark[] | null = data
-        bookmarks = result
+        bookmarks = result === null ? [] : result
+
     }
-    if (bookmarks) {
-        const categories = bookmarks.map(val => val.categories)
-        // console.log(categories)
-        return <Sidebar categories={categories} />
-    }
-    return;
+
+    // if (bookmarks) {
+    const categories: string[] | [] = bookmarks.map(val => val.categories)
+    // console.log(categories)
+
+    return <Sidebar categories={categories} />
+    // }
+
+    // return;
 }

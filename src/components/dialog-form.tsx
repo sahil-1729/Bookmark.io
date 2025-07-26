@@ -100,11 +100,17 @@ export default function DialogForm() {
 
     return (
         <Dialog open={check}>
-            <DialogTrigger >
-                <CirclePlus onClick={() => {
+            <DialogTrigger asChild>
+                {/* <CirclePlus onClick={() => {
                     shift()
                     form.reset()
-                }} className="right-12 bottom-12 fixed " size={40} color="white" />
+                }} className="right-12 bottom-12 fixed " size={40} color="white" /> */}
+                <Button onClick={() => {
+                    shift()
+                    form.reset()
+                }} className="right-12 bottom-12 fixed ">
+                    Add bookmark
+                </Button>
             </DialogTrigger>
             <DialogContent className="primary sm:w-[32rem] sm:h-max w-full h-full">
                 <DialogHeader>
@@ -130,7 +136,8 @@ export default function DialogForm() {
                                         <Input placeholder="CTRL + V" className="" {...field} />
                                     </FormControl>
                                     <FormDescription>
-                                        Copy, paste, pray it doesn&apos;t change (it probably will).
+                                        Copy + paste
+                                        {/* pray it doesn&apos;t change (it probably will). */}
                                     </FormDescription>
                                     <FormMessage />
                                 </FormItem>

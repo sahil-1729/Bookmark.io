@@ -25,7 +25,7 @@ export default async function Login({
 
         console.log(error)
         if (error) {
-            redirect('/login?message= login error email or password not matched')
+            redirect('/login?message= Login Error: Email or Password not matched')
         }
 
         const { data: { user } } = await supabase.auth.getUser()
@@ -78,15 +78,15 @@ export default async function Login({
                     )}
                 </form>
 
-                <Link
+                {/* <Link
                     href="/forgot-password"
                     className="rounded-md no-underline text-primary text-sm "
                 >
                     Forgotten Password?
-                </Link>
+                </Link> */}
 
-                <br />
-                <br />
+                {/* <br />
+                <br /> */}
 
                 <Link
                     href="/signup"
