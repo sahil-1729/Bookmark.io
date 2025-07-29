@@ -18,7 +18,8 @@ export default async function Card() {
     var bookmarks: fetchBookmark[] | null = []
 
     bookmarks = await getBookmark()
-    console.log(bookmarks)
+    // console.log('Card.tsx ', bookmarks)
+
     async function deleteB(data: any) {
         "use server"
         const bookmarkId = data.get('id')

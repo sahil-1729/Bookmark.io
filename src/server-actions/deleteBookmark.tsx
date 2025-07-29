@@ -24,13 +24,14 @@ export default async function deleteData({ bookmarkId }: props) {
 
         // console.log('data recieved - delete operation ', data)
 
-        if (data) {
-            revalidatePath('/')
-        }
+
         if (error) {
             console.error('Error deleting data', error)
             return;
         }
+
+        // revalidatePath to tell server to refresh the data 
+        revalidatePath('/')
     }
 
     //here it didn't work bc it was revalidating path before the bookmark was deleted

@@ -34,8 +34,8 @@ export async function sendData({ formData, path }: props) {
         console.log('adding bookmarks error - ', error)
     }
 
-    //removes the cached data on the specified path, thus refetching the data on that page for server components
-    revalidatePath(`/${path}`)
+    //removes the cached data on the specified path, thus refetching the data on that page for server components, which is abs necessary to get latest data
+    revalidatePath(`/`)
 
     // redirect('/timeline')
 
