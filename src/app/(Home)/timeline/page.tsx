@@ -1,5 +1,3 @@
-export const fetchCache = 'force-no-store'
-export const dynamic = 'force-dynamic';
 
 import BookmarkSidebar from "@/components/sidebar/bookmark-sidebar";
 import DialogForm from "@/components/dialog-form";
@@ -11,7 +9,7 @@ import { fetchBookmark } from "@/types";
 import getBookmark from "@/server-actions/getBookmark";
 
 
-export default async function Timeline() {
+export default async function Timeline({ searchParams }: { searchParams: { message: string } }) {
 
   var bookmarks: fetchBookmark[] | null = []
   bookmarks = await getBookmark()
