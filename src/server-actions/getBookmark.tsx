@@ -1,5 +1,6 @@
 import { fetchBookmark } from "@/types";
 import { createClient } from "@/utils/supabase/server";
+import { revalidatePath } from "next/cache";
 import urlMetadata from "url-metadata";
 
 export async function GetMetadata(link: string) {
@@ -50,6 +51,7 @@ export default async function getBookmark() {
                 }
                 return { ...val, metadata: "Untitled" }
             }))
+            revalidatePath('/')
             return bookmarks
         }
         return []
