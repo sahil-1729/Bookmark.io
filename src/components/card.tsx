@@ -12,8 +12,6 @@ import { headers } from "next/headers"
 
 export default async function Card({ bookmarks }: { bookmarks: fetchBookmark[] | null }) {
 
-    // console.log('Card.tsx ', bookmarks)
-
     async function deleteB(data: any) {
         "use server"
         const bookmarkId = data.get('id')
@@ -26,7 +24,6 @@ export default async function Card({ bookmarks }: { bookmarks: fetchBookmark[] |
             const headerList = await headers();
             const pathname = headerList.get("x-current-path");
 
-            bookmarks = await getBookmark()
             revalidatePath(`${pathname}`)
             redirect(`${pathname}`)
         }
