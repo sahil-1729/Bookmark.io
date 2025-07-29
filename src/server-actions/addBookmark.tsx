@@ -28,10 +28,11 @@ export async function sendData({ formData, path }: props) {
 
         const labelsList = formData.labels.map(val => val.text)
 
-        const { error } = await supabase
+        const { data } = await supabase
             .from('bookmarks')
             .insert({ user_id: user?.id, email: user?.email, categories: formData.categories, labels: labelsList, link: formData.link }, { count: 'planned' })
-        console.log('adding bookmarks error - ', error)
+            .select()
+        console.log('added bookmark', data)
     }
 
     //removes the cached data on the specified path, thus refetching the data on that page for server components, which is abs necessary to get latest data

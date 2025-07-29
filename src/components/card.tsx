@@ -48,31 +48,29 @@ export default async function Card() {
                 val.link = val.link.length > 100 ? temp : val.link;
 
                 return (
-                    <Suspense fallback={<p>Loading Feed...</p>}>
-                        <div key={key} className="bg-background p-4 border-primary border rounded-md flex flex-col gap-4 mx-4 mb-4 md:mb-8 ">
-                            <div className="flex justify-between">
-                                <a href={val.link} target="_blank" className="scroll-m-20 text-2xl font-semibold tracking-tight break-all lg:text-4xl">{val.metadata}</a>
-                                <form action={deleteB} >
-                                    <input name='id' className="hidden" defaultValue={val.id} />
-                                    <Button size='sm' >< Trash size={16} /></Button>
-                                </form>
-                            </div>
-                            <a href={val.link} target="_blank" className="text-sm font-medium leading-none break-all">{val.link}</a>
-
-                            <Button variant="outline" size="sm" className="max-w-max">{val.categories}</Button>
-                            <div className="flex justify-between items-center">
-
-                                <div className="flex flex-wrap gap-4">
-                                    {val.labels ? val.labels.map((value, key) =>
-                                        <div key={key} className="border-primary border px-2 py-1 max-w-max rounded-lg">
-                                            {value}
-                                        </div>
-                                    ) : ""}
-                                </div>
-                                <ToggleVisit id={val.id} visited={val.visited ? val.visited : false} />
-                            </div>
+                    <div key={key} className="bg-background p-4 border-primary border rounded-md flex flex-col gap-4 mx-4 mb-4 md:mb-8 ">
+                        <div className="flex justify-between">
+                            <a href={val.link} target="_blank" className="scroll-m-20 text-2xl font-semibold tracking-tight break-all lg:text-4xl">{val.metadata}</a>
+                            <form action={deleteB} >
+                                <input name='id' className="hidden" defaultValue={val.id} />
+                                <Button size='sm' >< Trash size={16} /></Button>
+                            </form>
                         </div>
-                    </Suspense>
+                        <a href={val.link} target="_blank" className="text-sm font-medium leading-none break-all">{val.link}</a>
+
+                        <Button variant="outline" size="sm" className="max-w-max">{val.categories}</Button>
+                        <div className="flex justify-between items-center">
+
+                            <div className="flex flex-wrap gap-4">
+                                {val.labels ? val.labels.map((value, key) =>
+                                    <div key={key} className="border-primary border px-2 py-1 max-w-max rounded-lg">
+                                        {value}
+                                    </div>
+                                ) : ""}
+                            </div>
+                            <ToggleVisit id={val.id} visited={val.visited ? val.visited : false} />
+                        </div>
+                    </div>
 
                 )
             })
