@@ -49,7 +49,7 @@ export default async function Card({ bookmarks }: { bookmarks: fetchBookmark[] |
                             <a href={val.link} target="_blank" className="scroll-m-20 text-2xl font-semibold tracking-tight break-all lg:text-4xl">{val.metadata}</a>
                             <form action={deleteB} >
                                 <input name='id' className="hidden" defaultValue={val.id} />
-                                <Button size='sm' >< Trash size={16} /></Button>
+                                <Button type="submit" size='sm' >< Trash size={16} /></Button>
                             </form>
                         </div>
                         <a href={val.link} target="_blank" className="text-sm font-medium leading-none break-all">{val.link}</a>
