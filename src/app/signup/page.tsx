@@ -58,13 +58,13 @@ export default async function Signup({
                 Home
             </Link>
 
-            <div className="w-full px-8 sm:max-w-md mx-auto mt-4 bg-black rounded-lg border-2 border-primary p-8">
+            <div className="w-full px-8 sm:max-w-md mx-auto mt-4  rounded-lg border-2 border-primary p-8">
                 <form action={signup} className="animate-in flex-1 flex flex-col w-full justify-center gap-2 text-foreground mb-4">
                     <label className="text-md" htmlFor="email">
                         Email
                     </label>
                     <input
-                        className="rounded-md px-4 py-2 bg-inherit border mb-6"
+                        className="rounded-md px-4 py-2 border-2 border-primary mb-6"
                         name="email"
                         placeholder=""
                         required
@@ -73,7 +73,7 @@ export default async function Signup({
                         Password
                     </label>
                     <input
-                        className="rounded-md px-4 py-2 bg-inherit border mb-6"
+                        className="rounded-md px-4 py-2 border-2 border-primary mb-6"
                         type="password"
                         name="password"
                         placeholder=""
@@ -83,7 +83,7 @@ export default async function Signup({
                         Confirm Password
                     </label>
                     <input
-                        className="rounded-md px-4 py-2 bg-inherit border mb-6"
+                        className="rounded-md px-4 py-2 border-2 border-primary mb-6"
                         type="password"
                         name="confirmPassword"
                         placeholder=""

@@ -1,6 +1,11 @@
 import { AuthButtons } from './auth-buttons';
+import { createClient } from '@/utils/supabase/server';
 
-export const Hero = () => {
+export const Hero = async () => {
+  const supabase = createClient()
+  const { data: { session } } = await supabase.auth.getSession()
+  const { data: { user } } = await supabase.auth.getUser()
+
   return (
     <div>
       <div className="relative isolate px-6 lg:px-8">
@@ -9,23 +14,25 @@ export const Hero = () => {
           aria-hidden="true"
         >
           <div
-          // className="relative left-[calc(50%-11rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem]"
-          // style={{
-          //   clipPath:
-          //     'polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)',
-          // }}
+            className="relative left-[calc(50%-11rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem]"
+            style={{
+              clipPath:
+                'polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)',
+            }}
           ></div>
         </div>
         <div className="mx-auto max-w-2xl lg:py-16">
           <div className="text-center">
-            <h1 className="text-4xl font-bold tracking-tight text-gray-100 sm:text-6xl">
+            <h1 className="text-4xl font-bold tracking-tight  sm:text-6xl">
               Bookmark more than links.
             </h1>
-            <p className="mt-6 text-lg leading-8 text-gray-300">
+            <p className="mt-6 text-lg leading-8 ">
               Collect, save, and organize your content — websites, newsletters, feeds, articles, and much more. All in one place.
             </p>
 
-            <AuthButtons />
+            {
+              session && user ? <></> : <AuthButtons />
+            }
           </div>
         </div>
         <div

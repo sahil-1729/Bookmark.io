@@ -26,6 +26,7 @@ export const BookmarkProvider = ({ children }: props) => {
         </BookmarkContext.Provider>
     );
 };
+
 export const useToggleContext = () => {
 
     const val = useContext(BookmarkContext)

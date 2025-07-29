@@ -46,13 +46,13 @@ export default async function Login({
                 Home
             </Link>
 
-            <div className="w-full bg-black p-8 rounded-lg border-2 border-primary px-8 sm:max-w-md mx-auto mt-4">
+            <div className="w-full p-8 rounded-lg border-2 border-primary px-8 sm:max-w-md mx-auto mt-4">
                 <form action={login} className="animate-in flex-1 flex flex-col w-full justify-center gap-2 text-foreground mb-4">
                     <label className="text-md" htmlFor="email">
                         Email
                     </label>
                     <input
-                        className="rounded-md px-4 py-2 bg-inherit border mb-6"
+                        className="rounded-md px-4 py-2  border-2 border-primary mb-6"
                         name="email"
                         placeholder=""
                         required
@@ -61,7 +61,7 @@ export default async function Login({
                         Password
                     </label>
                     <input
-                        className="rounded-md px-4 py-2 bg-inherit border mb-6"
+                        className="rounded-md px-4 py-2  border-2 border-primary mb-6"
                         type="password"
                         name="password"
                         placeholder=""
