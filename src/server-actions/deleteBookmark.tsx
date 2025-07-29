@@ -9,11 +9,11 @@ interface props {
 }
 
 export default async function deleteData({ bookmarkId }: props) {
-    console.log('recieved data - delete bookmarks', bookmarkId)
 
     const supabase = createClient()
     const { data: { user } } = await supabase.auth.getUser()
 
+    var result;
     if (bookmarkId && user) {
         const { error, data } = await supabase
             .from('bookmarks')
@@ -23,8 +23,7 @@ export default async function deleteData({ bookmarkId }: props) {
             .select()
         // .match({ id: bookmarkId,user_id: user.id  })
 
-        // console.log('data recieved - delete operation ', data)
-
+        console.log('recieved data - delete bookmarks', data)
 
         if (error) {
             console.error('Error deleting data', error)
@@ -36,5 +35,5 @@ export default async function deleteData({ bookmarkId }: props) {
     const headerList = await headers();
     const pathname = headerList.get("x-current-path");
     revalidatePath(`${pathname}`)
-
+    console.log('path changed - delete')
 }
