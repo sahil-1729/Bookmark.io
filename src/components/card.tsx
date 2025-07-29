@@ -25,10 +25,12 @@ export default async function Card({ bookmarks }: { bookmarks: fetchBookmark[] |
             // revalidatePath to tell server to refresh the data 
             const headerList = await headers();
             const pathname = headerList.get("x-current-path");
+
+            bookmarks = await getBookmark()
             revalidatePath(`${pathname}`)
+            redirect(`${pathname}`)
         }
         console.log(result)
-
 
         // redirect('/timeline')
     }
