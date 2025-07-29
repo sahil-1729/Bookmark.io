@@ -1,6 +1,7 @@
 import { fetchBookmark } from "@/types";
 import { createClient } from "@/utils/supabase/server";
 import { revalidatePath } from "next/cache";
+import { headers } from "next/headers";
 import urlMetadata from "url-metadata";
 
 export async function GetMetadata(link: string) {
@@ -37,7 +38,7 @@ export default async function getBookmark() {
             .eq('user_id', user.id)
             .order('created_at', { ascending: false })
 
-        console.log('getBookmark.tsx - bookmarks list', data, error)
+        console.log('getBookmark.tsx ', error)
         if (data) {
 
             bookmarks = await Promise.all(data.map(async val => {
@@ -51,7 +52,11 @@ export default async function getBookmark() {
                 }
                 return { ...val, metadata: "Untitled" }
             }))
-            revalidatePath('/')
+
+            const headerList = await headers();
+            const pathname = headerList.get("x-current-path");
+            revalidatePath(`${pathname}`)
+
             return bookmarks
         }
         return []

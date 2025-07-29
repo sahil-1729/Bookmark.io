@@ -2,6 +2,7 @@
 'use server'
 import { createClient } from "@/utils/supabase/server"
 import { revalidatePath } from "next/cache"
+import { headers } from "next/headers"
 
 interface props {
     bookmarkId: string,
@@ -31,7 +32,9 @@ export default async function deleteData({ bookmarkId }: props) {
         }
 
         // revalidatePath to tell server to refresh the data 
-        revalidatePath('/')
+        const headerList = await headers();
+        const pathname = headerList.get("x-current-path");
+        revalidatePath(`${pathname}`)
     }
 
     //here it didn't work bc it was revalidating path before the bookmark was deleted
