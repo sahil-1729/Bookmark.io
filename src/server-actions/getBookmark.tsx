@@ -1,3 +1,5 @@
+'use server'
+
 import { fetchBookmark } from "@/types";
 import { createClient } from "@/utils/supabase/server";
 import { revalidatePath } from "next/cache";
@@ -22,13 +24,17 @@ export async function GetMetadata(link: string) {
     // }
 }
 
-export default async function getBookmark() {
-
-    var bookmarks: fetchBookmark[] | null = []
+const createSession = async () => {
     const supabase = createClient()
     const { data: { session }, error } = await supabase.auth.getSession()
 
     const { data: { user } } = await supabase.auth.getUser()
+    return { session, user, supabase }
+}
+
+export default async function getBookmark() {
+    var bookmarks: fetchBookmark[] | null = []
+    const { session, user, supabase } = await createSession()
 
     if (session && user) {
 
@@ -53,9 +59,9 @@ export default async function getBookmark() {
                 return { ...val, metadata: "Untitled" }
             }))
 
-            const headerList = await headers();
-            const pathname = headerList.get("x-current-path");
-            revalidatePath(`${pathname}`)
+            // revalidatePath to tell server to refresh the data 
+            // const headerList = await headers();
+            // const pathname = headerList.get("x-current-path");
             console.log('getBookmarks ', bookmarks)
             return bookmarks
         }

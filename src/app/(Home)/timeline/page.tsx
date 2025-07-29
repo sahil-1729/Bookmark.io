@@ -1,3 +1,5 @@
+export const fetchCache = 'force-no-store'
+export const dynamic = 'force-dynamic';
 
 import BookmarkSidebar from "@/components/sidebar/bookmark-sidebar";
 import DialogForm from "@/components/dialog-form";
@@ -7,6 +9,9 @@ import DialogLogin from "@/components/dialog-login-again";
 import { Suspense } from "react";
 import { fetchBookmark } from "@/types";
 import getBookmark from "@/server-actions/getBookmark";
+import ToggleVisit from "@/components/toggleVisit";
+import { Button } from "@/components/ui/button";
+import { Trash } from "lucide-react";
 
 
 export default async function Timeline({ searchParams }: { searchParams: { message: string } }) {
@@ -14,6 +19,7 @@ export default async function Timeline({ searchParams }: { searchParams: { messa
   var bookmarks: fetchBookmark[] | null = []
   bookmarks = await getBookmark()
 
+  console.log(searchParams)
   return (    // <BookmarkProvider >
     <div className=" border-black stroke-border flex flex-row ">
       <Suspense fallback={<p>Loading...</p>}>
@@ -22,7 +28,42 @@ export default async function Timeline({ searchParams }: { searchParams: { messa
       <main className="border-white border-0 px-2 w-full h-full my-14 mx-4 sm:mx-0 sm:my-16">
         <Navbar />
 
-        <Card bookmarks={bookmarks} />
+        {bookmarks.length == 0 ?
+          <div className="bg-background p-4 border-primary border rounded-md flex flex-col gap-4 mx-4 mb-4 md:mb-8 ">
+            <h5 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl">
+              Looks like nothing here ...
+            </h5>
+          </div>
+          :
+          bookmarks.map((val: fetchBookmark, key: number) => {
+            const temp = val.link.substr(0, 100) + "...";
+            val.link = val.link.length > 100 ? temp : val.link;
+            return (
+              <div key={key} className="bg-background p-4 border-primary border rounded-md flex flex-col gap-4 mx-4 mb-4 md:mb-8 ">
+                <div className="flex justify-between">
+                  <a href={val.link} target="_blank" className="scroll-m-20 text-2xl font-semibold tracking-tight break-all lg:text-4xl">{val.metadata}</a>
+                  <Card bookmarkId={val.id} />
+                </div>
+                <a href={val.link} target="_blank" className="text-sm font-medium leading-none break-all">{val.link}</a>
+
+                <Button variant="outline" size="sm" className="max-w-max">{val.categories}</Button>
+                <div className="flex justify-between items-center">
+
+                  <div className="flex flex-wrap gap-4">
+                    {val.labels ? val.labels.map((value, key) =>
+                      <div key={key} className="border-primary border px-2 py-1 max-w-max rounded-lg">
+                        {value}
+                      </div>
+                    ) : ""}
+                  </div>
+                  <ToggleVisit id={val.id} visited={val.visited ? val.visited : false} />
+                </div>
+              </div>
+
+            )
+          })
+        }
+
         <DialogForm />
       </main>
       <DialogLogin />
