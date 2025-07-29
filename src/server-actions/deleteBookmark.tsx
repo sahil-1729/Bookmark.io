@@ -31,13 +31,10 @@ export default async function deleteData({ bookmarkId }: props) {
             return;
         }
 
-        // revalidatePath to tell server to refresh the data 
-        const headerList = await headers();
-        const pathname = headerList.get("x-current-path");
-        revalidatePath(`${pathname}`)
     }
-
-    //here it didn't work bc it was revalidating path before the bookmark was deleted
-    // revalidatePath(`/`)
+    // revalidatePath to tell server to refresh the data 
+    const headerList = await headers();
+    const pathname = headerList.get("x-current-path");
+    revalidatePath(`${pathname}`)
 
 }
