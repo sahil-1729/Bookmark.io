@@ -56,7 +56,7 @@ export default async function getBookmark() {
             const headerList = await headers();
             const pathname = headerList.get("x-current-path");
             revalidatePath(`${pathname}`)
-
+            console.log('getBookmarks ', bookmarks)
             return bookmarks
         }
         return []

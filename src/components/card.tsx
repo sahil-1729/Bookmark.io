@@ -1,17 +1,14 @@
-'use server'
 
 import { Button } from "./ui/button"
-import { createClient } from "@/utils/supabase/server"
 import { fetchBookmark } from "@/types"
 import urlMetadata from 'url-metadata'
-import { BookOpenCheck, Trash } from "lucide-react"
+import { Trash } from "lucide-react"
 import deleteBookmark from "../server-actions/deleteBookmark"
 import { revalidatePath } from "next/cache"
-import { Toggle } from "./ui/toggle"
 import ToggleVisit from "./toggleVisit"
 import { redirect } from "next/navigation"
 import getBookmark from "@/server-actions/getBookmark"
-import { Suspense } from "react"
+import { headers } from "next/headers"
 
 
 export default async function Card() {
@@ -24,29 +21,33 @@ export default async function Card() {
     async function deleteB(data: any) {
         "use server"
         const bookmarkId = data.get('id')
-        console.log(data.get('id'))
-        await deleteBookmark({ bookmarkId: bookmarkId })
+        // console.log(data.get('id'))
 
-        // revalidatePath('/timeline')
+        const result: Array<Object> | Object = await deleteBookmark({ bookmarkId: bookmarkId })
+
+        if (Array.isArray(result)) {
+            // revalidatePath to tell server to refresh the data 
+            const headerList = await headers();
+            const pathname = headerList.get("x-current-path");
+            revalidatePath(`${pathname}`)
+        }
+        console.log(result)
+
+
         // redirect('/timeline')
     }
 
     if (bookmarks) {
-
-        return bookmarks.length <= 0 ?
-            <Suspense fallback={<p>Loading Feed...</p>}>
-                <div className="bg-background p-4 border-primary border rounded-md flex flex-col gap-4 mx-4 mb-4 md:mb-8 ">
-                    <h5 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl">
-                        Looks like nothing here ...
-                    </h5>
-                </div>
-            </Suspense>
-
+        return bookmarks.length == 0 ?
+            <div className="bg-background p-4 border-primary border rounded-md flex flex-col gap-4 mx-4 mb-4 md:mb-8 ">
+                <h5 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl">
+                    Looks like nothing here ...
+                </h5>
+            </div>
             :
             bookmarks.map((val: fetchBookmark, key: number) => {
                 const temp = val.link.substr(0, 100) + "...";
                 val.link = val.link.length > 100 ? temp : val.link;
-
                 return (
                     <div key={key} className="bg-background p-4 border-primary border rounded-md flex flex-col gap-4 mx-4 mb-4 md:mb-8 ">
                         <div className="flex justify-between">
