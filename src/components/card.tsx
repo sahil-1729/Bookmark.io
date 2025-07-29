@@ -10,11 +10,8 @@ import { redirect } from "next/navigation"
 import getBookmark from "@/server-actions/getBookmark"
 import { headers } from "next/headers"
 
-export default async function Card() {
+export default async function Card({ bookmarks }: { bookmarks: fetchBookmark[] | null }) {
 
-    var bookmarks: fetchBookmark[] | null = []
-
-    bookmarks = await getBookmark()
     // console.log('Card.tsx ', bookmarks)
 
     async function deleteB(data: any) {
