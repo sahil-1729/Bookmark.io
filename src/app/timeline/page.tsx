@@ -1,10 +1,11 @@
-'use server'
 import BookmarkSidebar from "@/components/sidebar/bookmark-sidebar";
 import DialogForm from "@/components/dialog-form";
 import Card from "@/components/card";
 import Navbar from "@/components/nav-bar";
 import DialogLogin from "@/components/dialog-login-again";
 import { Suspense } from "react";
+
+export const dynamic = 'force-dynamic';
 
 export default async function Timeline() {
   return (    // <BookmarkProvider >

@@ -26,11 +26,8 @@ export default async function deleteData({ bookmarkId }: props) {
             return { message: error };
         }
 
-        if (data) {
+        if (data.length > 0) {
             return data
-        }
-        else {
-            return { message: "No rows deleted" }
         }
     }
 

@@ -10,7 +10,6 @@ import { redirect } from "next/navigation"
 import getBookmark from "@/server-actions/getBookmark"
 import { headers } from "next/headers"
 
-
 export default async function Card() {
 
     var bookmarks: fetchBookmark[] | null = []
