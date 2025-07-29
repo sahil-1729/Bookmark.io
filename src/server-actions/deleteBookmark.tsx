@@ -8,17 +8,25 @@ interface props {
 }
 
 export default async function deleteData({ bookmarkId }: props) {
-    console.log('The recieved data ', bookmarkId)
+    console.log('recieved data - delete bookmarks', bookmarkId)
 
     const supabase = createClient()
     const { data: { user } } = await supabase.auth.getUser()
 
     if (bookmarkId && user) {
-        const { error } = await supabase
+        const { error, data } = await supabase
             .from('bookmarks')
-            .delete()
-            .match({ id: bookmarkId, user_id: user.id })
+            .delete({ count: 'planned' })
+            .eq('id', bookmarkId)
+            .eq('user_id', user.id)
+            .select()
+        // .match({ id: bookmarkId,user_id: user.id  })
 
+        // console.log('data recieved - delete operation ', data)
+
+        if (data) {
+            revalidatePath('/')
+        }
         if (error) {
             console.error('Error deleting data', error)
             return;

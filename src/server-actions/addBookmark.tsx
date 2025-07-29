@@ -1,6 +1,7 @@
 
 'use server'
 import { createClient } from "@/utils/supabase/server"
+import { count } from "console"
 import { revalidatePath } from "next/cache"
 import { redirect } from "next/navigation"
 
@@ -19,7 +20,7 @@ type labelData = {
 }
 
 export async function sendData({ formData, path }: props) {
-    console.log('The recieved data ', formData)
+    // console.log('recieved data - add bookmarks ', formData)
     const supabase = createClient()
     const { data: { user } } = await supabase.auth.getUser()
 
@@ -29,14 +30,14 @@ export async function sendData({ formData, path }: props) {
 
         const { error } = await supabase
             .from('bookmarks')
-            .insert({ user_id: user?.id, email: user?.email, categories: formData.categories, labels: labelsList, link: formData.link })
-        console.log(error)
+            .insert({ user_id: user?.id, email: user?.email, categories: formData.categories, labels: labelsList, link: formData.link }, { count: 'planned' })
+        console.log('adding bookmarks error - ', error)
     }
 
     //removes the cached data on the specified path, thus refetching the data on that page for server components
-    // revalidatePath(`/${path}`)
+    revalidatePath(`/${path}`)
 
-    redirect('/timeline')
+    // redirect('/timeline')
 
     // return formData
 }

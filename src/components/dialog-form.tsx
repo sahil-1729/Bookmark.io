@@ -43,8 +43,8 @@ const formSchema: ZodType<formInterface> = z.object({
     categories: z.string().min(2, {
         message: "categories must be at least 2 characters.",
     }).max(50),
-    link: z.string().min(2, {
-        message: "link must be at least 2 characters.",
+    link: z.string().min(0, {
+        message: "link cannot be empty.",
     }).max(1000).url({ message: "Invalid url" }),
     labels: z.array(
         z.object({
@@ -133,7 +133,7 @@ export default function DialogForm() {
                                 <FormItem>
                                     <FormLabel>Link</FormLabel>
                                     <FormControl>
-                                        <Input placeholder="CTRL + V" className="" {...field} />
+                                        <Input placeholder="CTRL + V" className="border border-primary" {...field} />
                                     </FormControl>
                                     <FormDescription>
                                         Copy + paste
@@ -167,7 +167,7 @@ export default function DialogForm() {
                                 <FormItem>
                                     <FormLabel>Categories</FormLabel>
                                     <FormControl>
-                                        <Input placeholder="where will this bookmark belong?" className="" {...field} />
+                                        <Input placeholder="where will this bookmark belong?" className="border border-primary" {...field} />
                                     </FormControl>
                                     <FormDescription>
                                         Helping you to organize your bookmarks
@@ -184,9 +184,10 @@ export default function DialogForm() {
                                 <FormItem className="flex flex-col items-start">
                                     <FormLabel className="text-left">Context</FormLabel>
                                     <FormControl className="max-w-full">
-
                                         <TagInput
-
+                                            styleClasses={{
+                                                inlineTagsContainer: 'border-primary border p-2 rounded-lg',
+                                            }}
                                             customTagRenderer={
                                                 (tag, isActiveTag) => (<
                                                     div key={
@@ -195,7 +196,7 @@ export default function DialogForm() {
                                                     className={
                                                         `px-2 py-1 bg-primary rounded-full ${isActiveTag ? "ring-ring ring-offset-2 ring-2 ring-offset-background" : ""}`
                                                     } >
-                                                    <span className="text-white text-sm mr-1 flex flex-row" >
+                                                    <span className="text-primary-foreground text-sm mr-1 flex flex-row" >
                                                         {
                                                             tag.text
                                                         }
@@ -227,17 +228,19 @@ export default function DialogForm() {
                                                 variant: "primary",
                                                 shape: "rounded",
                                             }}
-
-                                            activeTagIndex={activeTagIndex} setActiveTagIndex={setActiveTagIndex} {...field}
+                                            activeTagIndex={activeTagIndex}
+                                            setActiveTagIndex={setActiveTagIndex}
+                                            {...field}
                                             placeholder="link associated to which topic?"
                                             tags={tags}
 
                                             className="resize-y flex flex-wrap"
                                             setTags={(newTags) => {
-                                                console.log(newTags)
+                                                // console.log(newTags)
                                                 setTags(newTags)
                                                 form.setValue('labels', newTags as [Tag, ...Tag[]])
                                             }} />
+
                                     </FormControl>
                                     <FormDescription className="text-left">
                                         Just so you dont forget why you add it :{")"}
