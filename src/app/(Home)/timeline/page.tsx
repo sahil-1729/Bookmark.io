@@ -18,8 +18,6 @@ export default async function Timeline() {
   var bookmarks: fetchBookmark[] | null = []
   bookmarks = await GetBookmark()
 
-  console.log("timeline called")
-
   return (    // <BookmarkProvider >
     <div className=" border-black stroke-border flex flex-row ">
       <Suspense fallback={<p>Loading...</p>}>
