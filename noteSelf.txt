@@ -1,2 +1,4 @@
 To send data from client to server component one of the ways is to use .bind method
 https://nextjs.org/docs/13/app/api-reference/functions/server-actions
+
+WHen using spaces in searchParams, the spaces are encoded with % and numbers like 20, so decode them we use decodeURIComponent a method which will decode the search Params
