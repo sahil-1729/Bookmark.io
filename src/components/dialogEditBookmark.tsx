@@ -26,15 +26,16 @@ import {
     DialogClose,
 
 } from "@/components/ui/dialog"
-import { CirclePlus, X } from 'lucide-react';
+import { CirclePlus, SquarePen, X } from 'lucide-react';
 import { SetStateAction, useState } from "react"
 import clsx from 'clsx';
 
-import { formInterface } from "@/types"
+import { fetchBookmark, formInterface } from "@/types"
 
-import { sendData } from "../server-actions/addBookmark"
+import UpdateBookmark from '@/server-actions/updateBookmark'
 import { Tag, TagInput } from 'emblor';
 import { cn } from '@/lib/utils'
+import { link } from 'fs'
 
 const formSchema: ZodType<formInterface> = z.object({
     // labels: z.string().min(2, {
@@ -43,9 +44,7 @@ const formSchema: ZodType<formInterface> = z.object({
     categories: z.string().min(2, {
         message: "categories must be at least 2 characters.",
     }).max(50),
-    link: z.string().min(0, {
-        message: "link cannot be empty.",
-    }).max(1000).url({ message: "Invalid url" }),
+    link: z.string(),
     labels: z.array(
         z.object({
             id: z.string(),
@@ -54,38 +53,38 @@ const formSchema: ZodType<formInterface> = z.object({
     ),
 })
 
-export default function DialogForm() {
+export default function DialogEditBookmark({ bookmark }: { bookmark: fetchBookmark }) {
 
-    // 1. Define your form.
     const [check, setCheck] = useState(false)
-    // const [formData, setForm] = useState<formInterface>()
 
-    const [tags, setTags] = useState<Tag[]>([]);
+    const [tags, setTags] = useState<Tag[]>(bookmark.labels);
     const [activeTagIndex, setActiveTagIndex] = useState<number | null>(null);
 
     var form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
-            categories: "",
-            link: "",
-            labels: []
+            categories: bookmark.categories,
+            link: bookmark.link,
+            labels: bookmark.labels
         },
     })
 
+
     const pathname = usePathname()
-    const updateUserWithId = sendData.bind(null)
+    const updateBookmarkWithId = UpdateBookmark.bind(null)
 
-    // 2. Define a submit handler.
     function onSubmit(values: z.infer<typeof formSchema>) {
-        //THIS FUNCTION IS EXECUTED ONLY AFTER BEING VALIDATED BY ZOD 
-        // if failed to validate then the function wont execute 
 
-        // console.log('success ', values)
-        // setForm(values)
-
+        console.log('updated values ', values)
+        const result = {
+            ...bookmark,
+            categories: values.categories,
+            link: values.link,
+            labels: values.labels
+        }
         form.reset()
-        setTags([])
-        updateUserWithId({ formData: values, path: pathname })
+        // setTags([])
+        updateBookmarkWithId({ bookmark: result, path: pathname })
 
         closeForm()
     }
@@ -96,36 +95,45 @@ export default function DialogForm() {
     }
 
 
-    // console.log('the value ', form.watch('link'))
+    console.log('link ', form.watch('link'), 'category ', form.watch('categories'), 'label ', form.watch('labels'),)
 
     return (
         <Dialog open={check}>
             <DialogTrigger asChild>
-                {/* <CirclePlus onClick={() => {
-                    shift()
-                    form.reset()
-                }} className="right-12 bottom-12 fixed " size={40} color="white" /> */}
+
                 <Button onClick={() => {
                     closeForm()
                     form.reset()
-                }} className="right-12 bottom-12 fixed text-xl p-4">
-                    <p>
-                        Add bookmark
-                    </p>
+                }} className="" size="sm">
+
+                    <SquarePen size={17} />
+
                 </Button>
+
             </DialogTrigger>
+
             <DialogContent className="primary sm:w-[32rem] sm:h-max w-full h-full">
+
                 <DialogHeader>
-                    <DialogTitle>Add bookmark
+
+                    <DialogTitle>
+                        Update bookmark
                     </DialogTitle>
+
                     <DialogDescription>
-                        Don&apos;t worry, we&apos;ll save you the trouble of finding this frustration again
+                        Quickly rename your bookmark to keep things clear and organized.
                     </DialogDescription>
+
                 </DialogHeader>
+
                 <DialogClose className="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground">
-                    <X onClick={() => closeForm()} className="h-4 w-4" />
+                    <X onClick={() => {
+                        closeForm()
+                        // setTags(bookmark.labels)
+                    }} className="h-4 w-4" />
                     <span className="sr-only">Close</span>
                 </DialogClose>
+
                 <Form {...form} >
                     <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 ">
                         <FormField
@@ -135,33 +143,18 @@ export default function DialogForm() {
                                 <FormItem>
                                     <FormLabel>Link</FormLabel>
                                     <FormControl>
-                                        <Input placeholder="CTRL + V" className="border border-primary" {...field} />
+                                        <Input disabled placeholder="CTRL + V" className="border border-primary" {...field} />
                                     </FormControl>
                                     <FormDescription>
-                                        Copy + paste
-                                        {/* pray it doesn&apos;t change (it probably will). */}
+                                        {/* Copy + paste */}
                                     </FormDescription>
                                     <FormMessage />
                                 </FormItem>
-                            )}
+                            )
+                            }
+
                         />
 
-                        {/* <FormField
-                            control={form.control}
-                            name="labels"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel>Context</FormLabel>
-                                    <FormControl>
-                                        <Input placeholder="link associated to which topic?" className="" {...field} />
-                                    </FormControl>
-                                    <FormDescription>
-                                        Just so you dont forget why you add it :{")"}
-                                    </FormDescription>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        /> */}
                         <FormField
                             control={form.control}
                             name="categories"
@@ -176,7 +169,8 @@ export default function DialogForm() {
                                     </FormDescription>
                                     <FormMessage />
                                 </FormItem>
-                            )}
+                            )
+                            }
                         />
 
                         <FormField
@@ -187,6 +181,7 @@ export default function DialogForm() {
                                     <FormLabel className="text-left">Context</FormLabel>
                                     <FormControl className="max-w-full">
                                         <TagInput
+
                                             styleClasses={{
                                                 inlineTagsContainer: 'border-primary border p-2 rounded-lg',
                                             }}
@@ -224,7 +219,7 @@ export default function DialogForm() {
                                             // direction={'row'}
                                             showCount={true}
                                             // maxTags={3}
-                                            // truncate={tags.length}
+                                            truncate={6}
 
                                             variant={{
                                                 variant: "primary",
@@ -239,6 +234,7 @@ export default function DialogForm() {
                                             className="resize-y flex flex-wrap"
                                             setTags={(newTags) => {
                                                 // console.log(newTags)
+
                                                 setTags(newTags)
                                                 form.setValue('labels', newTags as [Tag, ...Tag[]])
                                             }} />
@@ -260,9 +256,7 @@ export default function DialogForm() {
                                 <Button type="submit" onClick={() => {
                                     // const errorsList: object = form.formState
                                     // console.log(errorsList)
-                                }} className={clsx('', {
-                                    'hidden': !(form.getValues('categories')) || !(form.getValues('link')) || !(form.getValues('labels'))
-                                })} >save</Button>
+                                }} className={clsx('', {})} >save</Button>
 
                             </DialogClose>
                         </DialogFooter>

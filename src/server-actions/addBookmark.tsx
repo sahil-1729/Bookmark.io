@@ -25,14 +25,14 @@ export async function sendData({ formData, path }: props) {
 
     if (formData) {
 
-        const labelsList = formData.labels.map(val => val.text)
+        console.log(formData.labels)
 
         let metadata = await GetMetadata(formData.link)
         metadata = metadata.length > 0 ? metadata : "Untitled"
 
         const { data } = await supabase
             .from('bookmarks')
-            .insert({ user_id: user?.id, email: user?.email, categories: formData.categories, labels: labelsList, link: formData.link, metadata: metadata }, { count: 'planned' })
+            .insert({ user_id: user?.id, email: user?.email, categories: formData.categories, labels: formData.labels, link: formData.link, metadata: metadata }, { count: 'planned' })
             .select()
         // console.log('added bookmark', data)
     }
