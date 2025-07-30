@@ -25,7 +25,7 @@ export default function DeleteBookmarkBtn({ bookmarkId }: { bookmarkId: string }
     }
     return (
         <>
-            <Button size='sm' onClick={() => {
+            <Button key={bookmarkId} size='sm' onClick={() => {
                 onDelete(bookmarkId)
             }}>
                 < Trash size={16} />

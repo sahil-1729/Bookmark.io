@@ -5,27 +5,33 @@ import { BookOpenCheck } from "lucide-react"
 import UpdateVisited from "@/server-actions/updateVisited"
 import { useState } from "react"
 import clsx from "clsx"
+import { useRouter } from "next/navigation"
 
 interface props {
-    id: string,
+    bookmarkId: string,
     visited: boolean
 }
 
-export default function ToggleVisit({ id, visited }: props) {
+export default function ToggleVisit({ bookmarkId, visited }: props) {
+
+    const router = useRouter()
 
     const updateVisitedWithId = UpdateVisited.bind(null)
     const [border, setBorder] = useState(visited)
 
 
-    return <Toggle className={clsx('flex items-center', {
+    return <Toggle key={bookmarkId} className={clsx('flex items-center', {
         'border-primary border-2': border
-    })} defaultPressed={visited ? visited : false} onPressedChange={(pressed) => {
-        setBorder(pressed)
-        updateVisitedWithId({ bookmarkId: id, visited: pressed })
-        // console.log(pressed)
-    }} >
-        <div>
+    })} defaultPressed={visited ? visited : false}
+        onPressedChange={(pressed) => {
+            setBorder(pressed)
+            updateVisitedWithId({ bookmarkId: bookmarkId, visited: pressed })
+            // console.log(pressed)
+            router.refresh()
+        }} >
+        <p>
             visited
-        </div>
-        &nbsp; <BookOpenCheck /></Toggle>
+        </p>
+        &nbsp; <BookOpenCheck />
+    </Toggle>
 }

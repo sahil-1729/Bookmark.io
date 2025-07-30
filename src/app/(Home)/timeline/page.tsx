@@ -44,7 +44,7 @@ export default async function Timeline() {
                 </div>
                 <a href={val.link} target="_blank" className="text-sm font-medium leading-none break-all">{val.link}</a>
 
-                <Button variant="outline" size="sm" className="max-w-max">{val.categories}</Button>
+                <Button key={val.id} variant="outline" size="sm" className="max-w-max">{val.categories}</Button>
                 <div className="flex justify-between items-center">
 
                   <div className="flex flex-wrap gap-4">
@@ -54,7 +54,7 @@ export default async function Timeline() {
                       </div>
                     ) : ""}
                   </div>
-                  <ToggleVisit id={val.id} visited={val.visited ? val.visited : false} />
+                  <ToggleVisit bookmarkId={val.id} visited={val.visited ? val.visited : false} />
                 </div>
               </div>
 

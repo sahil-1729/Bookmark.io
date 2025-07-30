@@ -18,7 +18,7 @@ const sidebarItems: SidebarItems = {
     links: [
         { label: 'Timeline', href: '/timeline', icon: History },
         { label: 'Search', href: '/search', icon: Search },
-        { label: 'Groups', href: '/groups', icon: Component },
+        // { label: 'Groups', href: '/groups', icon: Component },
         {
             href: '/labels',
             icon: Tags,
@@ -47,7 +47,7 @@ export function Sidebar({ categories }: props) {
     const isDesktop = useMediaQuery('(min-width: 640px)', { 'initializeWithValue': false });
 
     if (isDesktop) {
-        return <SidebarDesktop categories={categories} sidebarItems={sidebarItems} />;
+        // return <SidebarDesktop categories={categories} sidebarItems={sidebarItems} />;
     }
 
     return <SidebarMobile categories={categories} sidebarItems={sidebarItems} />;
