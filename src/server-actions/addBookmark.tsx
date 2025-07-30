@@ -25,7 +25,7 @@ export async function sendData({ formData, path }: props) {
 
     if (formData) {
 
-        console.log(formData.labels)
+        // console.log(formData.labels)
 
         let metadata = await GetMetadata(formData.link)
         metadata = metadata.length > 0 ? metadata : "Untitled"

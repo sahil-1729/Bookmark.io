@@ -34,7 +34,7 @@ export function SidebarMobile(props: SidebarMobileProps) {
                     <Menu size={20} />
                 </Button>
             </SheetTrigger>
-            <SheetContent side='left' className='px-3 py-4 bg-black' hideClose>
+            <SheetContent side='left' className='px-3 py-4 ' hideClose>
                 <SheetHeader className='flex flex-row justify-between items-center space-y-0'>
                     <span className='text-lg font-semibold  mx-3'>
                         Bookmark.io
