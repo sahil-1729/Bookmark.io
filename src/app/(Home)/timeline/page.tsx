@@ -3,21 +3,20 @@ export const dynamic = 'force-dynamic';
 
 import BookmarkSidebar from "@/components/sidebar/bookmark-sidebar";
 import DialogForm from "@/components/dialog-form";
-import DeleteBookmark from "@/components/delBookmarkBtn";
+import DeleteBookmarkBtn from "@/components/delBookmarkBtn";
 import Navbar from "@/components/nav-bar";
 import DialogLogin from "@/components/dialog-login-again";
 import { Suspense } from "react";
 import { fetchBookmark } from "@/types";
-import getBookmark from "@/server-actions/getBookmark";
+import GetBookmark from "@/server-actions/getBookmark";
 import ToggleVisit from "@/components/toggleVisit";
 import { Button } from "@/components/ui/button";
-import { Trash } from "lucide-react";
 
 
-export default async function Timeline({ searchParams }: { searchParams: { message: string } }) {
+export default async function Timeline() {
 
   var bookmarks: fetchBookmark[] | null = []
-  bookmarks = await getBookmark()
+  bookmarks = await GetBookmark()
 
   console.log("timeline called")
 
@@ -43,7 +42,7 @@ export default async function Timeline({ searchParams }: { searchParams: { messa
               <div key={key} className="bg-background p-4 border-primary border rounded-md flex flex-col gap-4 mx-4 mb-4 md:mb-8 ">
                 <div className="flex justify-between">
                   <a href={val.link} target="_blank" className="scroll-m-20 text-2xl font-semibold tracking-tight break-all lg:text-4xl">{val.metadata}</a>
-                  <DeleteBookmark bookmarkId={val.id} />
+                  <DeleteBookmarkBtn bookmarkId={val.id} />
                 </div>
                 <a href={val.link} target="_blank" className="text-sm font-medium leading-none break-all">{val.link}</a>
 

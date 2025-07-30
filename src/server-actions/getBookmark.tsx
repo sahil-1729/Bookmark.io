@@ -1,9 +1,8 @@
+// make sure to use 'use server' when you are using client component to call server component(like calling Getbookmark from client component deleteBookmarkBtn ) 
 'use server'
 
 import { fetchBookmark } from "@/types";
 import { createClient } from "@/utils/supabase/server";
-import { revalidatePath } from "next/cache";
-import { headers } from "next/headers";
 import urlMetadata from "url-metadata";
 
 export async function GetMetadata(link: string) {
@@ -18,13 +17,13 @@ export async function GetMetadata(link: string) {
     } catch (e) {
         // console.log(e)
     }
-    return null
+    return ""
 
     // console.log(data)
     // }
 }
 
-const createSession = async () => {
+const CreateSession = async () => {
     const supabase = createClient()
     const { data: { session }, error } = await supabase.auth.getSession()
 
@@ -32,9 +31,9 @@ const createSession = async () => {
     return { session, user, supabase }
 }
 
-export default async function getBookmark() {
+export default async function GetBookmark() {
     var bookmarks: fetchBookmark[] | null = []
-    const { session, user, supabase } = await createSession()
+    const { session, user, supabase } = await CreateSession()
 
     if (session && user) {
 
@@ -51,7 +50,7 @@ export default async function getBookmark() {
                 const link = await GetMetadata(val.link)
                 // console.log('card ', link)
 
-                if (link) {
+                if (link.length > 0) {
                     const res = { ...val, metadata: link }
                     // console.log(res)
                     return res

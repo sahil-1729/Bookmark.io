@@ -6,10 +6,9 @@ import deleteBookmark from "../server-actions/deleteBookmark"
 
 import { useRouter } from "next/navigation"
 
-export default function DeleteBookmark({ bookmarkId }: { bookmarkId: string }) {
+export default function DeleteBookmarkBtn({ bookmarkId }: { bookmarkId: string }) {
 
     const router = useRouter()
-    // const [bookmarks, setBookmarks] = useState(fetchedBookmarks)
 
     async function onDelete(bookmarkId: string) {
         // const bookmarkId = data.get('id')
@@ -24,7 +23,6 @@ export default function DeleteBookmark({ bookmarkId }: { bookmarkId: string }) {
         console.log(result)
     }
     return (
-        // <form action={onDelete} >
         <>
             <Button size='sm' onClick={() => {
                 onDelete(bookmarkId)
@@ -32,8 +30,6 @@ export default function DeleteBookmark({ bookmarkId }: { bookmarkId: string }) {
                 < Trash size={16} />
             </Button>
         </>
-
-        // </form>
     )
 
 } 

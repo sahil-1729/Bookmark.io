@@ -1,9 +1,7 @@
 
 'use server'
 import { createClient } from "@/utils/supabase/server"
-import { count } from "console"
 import { revalidatePath } from "next/cache"
-import { redirect } from "next/navigation"
 
 interface props {
     formData: data,
