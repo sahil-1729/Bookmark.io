@@ -47,7 +47,7 @@ export function Sidebar({ categories }: props) {
     const isDesktop = useMediaQuery('(min-width: 640px)', { 'initializeWithValue': false });
 
     if (isDesktop) {
-        // return <SidebarDesktop categories={categories} sidebarItems={sidebarItems} />;
+        return <SidebarDesktop categories={categories} sidebarItems={sidebarItems} />;
     }
 
     return <SidebarMobile categories={categories} sidebarItems={sidebarItems} />;

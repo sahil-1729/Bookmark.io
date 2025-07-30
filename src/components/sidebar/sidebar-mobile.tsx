@@ -65,7 +65,7 @@ export function SidebarMobile(props: SidebarMobileProps) {
                     <div className='flex flex-col gap-1 w-full'>
                         {uniqueBookmarks?.sort().map((category: string, index: number) => {
                             return (
-                                <Link key={index} href='#'>
+                                <Link key={index} href={`/category/${category}`}>
                                     <SidebarButton
                                         variant={pathname === '' ? 'secondary' : 'ghost'}
                                         icon={Folder}

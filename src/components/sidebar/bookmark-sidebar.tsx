@@ -3,6 +3,7 @@
 import { createClient } from "@/utils/supabase/server"
 import { Sidebar } from "./sidebar"
 import { fetchBookmark } from "@/types"
+import GetBookmark from "@/server-actions/getBookmark"
 
 export default async function BookmarkSidebar() {
 
@@ -14,17 +15,13 @@ export default async function BookmarkSidebar() {
 
     if (session && user) {
 
-        const { data, error } = await supabase
-            .from('bookmarks')
-            .select('*')
-            .eq('user_id', user.id)
-            .order('created_at', { ascending: false })
-
+        const data = await GetBookmark()
         // console.log(data, error)
-        const result: fetchBookmark[] | null = data
+        const result: fetchBookmark[] | [] = data
         bookmarks = result === null ? [] : result
 
     }
+
 
     // if (bookmarks) {
     const categories: string[] | [] = bookmarks.map(val => val.categories)
