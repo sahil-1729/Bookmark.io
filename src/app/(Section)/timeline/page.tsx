@@ -13,6 +13,7 @@ import GetBookmark from "@/server-actions/getBookmark";
 import ToggleVisit from "@/components/toggleVisit";
 import { Button } from "@/components/ui/button";
 import DialogEditBookmark from "@/components/dialogEditBookmark";
+import Link from "next/link";
 
 
 export default async function Timeline() {
@@ -44,7 +45,9 @@ export default async function Timeline() {
                   </div>
                   <a href={val.link} target="_blank" className="text-sm font-medium leading-none break-all">{val.link}</a>
 
-                  <Button key={val.id} size="sm" className="max-w-max border-lg border-primary">{val.categories}</Button>
+                  <Link href={`/category/${val.categories}`}>
+                    <Button key={val.id} size="sm" className="max-w-max border-lg border-primary">{val.categories}</Button>
+                  </Link>
                   <div className="flex justify-between items-center">
 
                     <div className="flex flex-wrap gap-4">

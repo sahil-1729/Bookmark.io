@@ -10,6 +10,8 @@ import { Button } from "@/components/ui/button";
 import GetBookmark from "@/server-actions/getBookmark";
 import { fetchBookmark } from "@/types";
 import { Folder } from "lucide-react";
+import { redirect } from "next/navigation";
+import Link from "next/link";
 
 // export async function generateStaticParams() {
 //     return [{ "id": 1 }]
@@ -31,9 +33,9 @@ export default async function Category({
     }
     )
 
-    // if (bookmarks.length <= 0) {
-    //     redirect('/timeline')
-    // }
+    if (bookmarks.length <= 0) {
+        redirect('/timeline')
+    }
 
     return (
         <div className=" border-black stroke-border flex flex-row ">
@@ -61,8 +63,9 @@ export default async function Category({
                                         </div>
                                     </div>
                                     <a href={val.link} target="_blank" className="text-sm font-medium leading-none break-all">{val.link}</a>
-
-                                    <Button key={val.id} size="sm" className="max-w-max border-lg border-primary">{val.categories}</Button>
+                                    <Link href={`/category/${val.categories}`}>
+                                        <Button key={val.id} size="sm" className="max-w-max border-lg border-primary">{val.categories}</Button>
+                                    </Link>
                                     <div className="flex justify-between items-center">
 
                                         <div className="flex flex-wrap gap-4">
