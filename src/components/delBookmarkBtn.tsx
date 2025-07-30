@@ -18,6 +18,7 @@ export default function DeleteBookmarkBtn({ bookmarkId }: { bookmarkId: string }
 
         if (Array.isArray(result)) {
             router.refresh()
+            return
         }
 
         console.log(result)
