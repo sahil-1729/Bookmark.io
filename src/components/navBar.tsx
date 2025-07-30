@@ -1,6 +1,5 @@
 
-// import { useState, useEffect } from "react";
-import { ModeToggle } from "./theme-toggle";
+import { ModeToggle } from "./themeToggle";
 import { Badge } from "./ui/badge";
 import { Button } from "./ui/button";
 import { GetUserName, SignOut } from "./User";

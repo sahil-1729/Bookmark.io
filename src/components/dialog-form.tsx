@@ -66,7 +66,6 @@ export default function DialogForm() {
     var form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
-            // labels: "",
             categories: "",
             link: "",
             labels: []
@@ -78,19 +77,20 @@ export default function DialogForm() {
 
     // 2. Define a submit handler.
     function onSubmit(values: z.infer<typeof formSchema>) {
-        //THIS FUNCTION WILL BE EXECUTED ONLY AFTER BEING VALIDATED BY ZOD 
+        //THIS FUNCTION IS EXECUTED ONLY AFTER BEING VALIDATED BY ZOD 
         // if failed to validate then the function wont execute 
 
         // console.log('success ', values)
         // setForm(values)
+
         form.reset()
         setTags([])
         updateUserWithId({ formData: values, path: pathname })
 
-        shift()
+        closeForm()
     }
 
-    function shift() {
+    function closeForm() {
         const shift: boolean = !check
         setCheck(shift)
     }
@@ -106,7 +106,7 @@ export default function DialogForm() {
                     form.reset()
                 }} className="right-12 bottom-12 fixed " size={40} color="white" /> */}
                 <Button onClick={() => {
-                    shift()
+                    closeForm()
                     form.reset()
                 }} className="right-12 bottom-12 fixed ">
                     Add bookmark
@@ -121,7 +121,7 @@ export default function DialogForm() {
                     </DialogDescription>
                 </DialogHeader>
                 <DialogClose className="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground">
-                    <X onClick={() => shift()} className="h-4 w-4" />
+                    <X onClick={() => closeForm()} className="h-4 w-4" />
                     <span className="sr-only">Close</span>
                 </DialogClose>
                 <Form {...form} >

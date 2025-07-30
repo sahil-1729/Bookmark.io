@@ -1,0 +1,2 @@
+To send data from client to server component one of the ways is to use .bind method
+https://nextjs.org/docs/13/app/api-reference/functions/server-actions

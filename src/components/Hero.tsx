@@ -1,4 +1,4 @@
-import { AuthButtons } from './auth-buttons';
+import { AuthButtons } from './authButtons';
 import { createClient } from '@/utils/supabase/server';
 
 export const Hero = async () => {

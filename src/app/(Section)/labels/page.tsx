@@ -1,7 +1,7 @@
 
 import BookmarkSidebar from "@/components/sidebar/bookmark-sidebar";
 import DialogForm from "@/components/dialog-form";
-import Navbar from "@/components/nav-bar";
+import Navbar from "@/components/navBar";
 import DialogLogin from "@/components/dialog-login-again";
 
 export default function Home() {
