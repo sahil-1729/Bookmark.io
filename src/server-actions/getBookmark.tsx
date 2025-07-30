@@ -43,26 +43,26 @@ export default async function GetBookmark() {
             .eq('user_id', user.id)
             .order('created_at', { ascending: false })
 
-        console.log('getBookmark.tsx ', error)
+        // console.log('getBookmark.tsx ', data)
         if (data) {
 
-            bookmarks = await Promise.all(data.map(async val => {
-                const link = await GetMetadata(val.link)
-                // console.log('card ', link)
+            // bookmarks = await Promise.all(data.map(async val => {
+            //     const link = await GetMetadata(val.link)
+            //     // console.log('card ', link)
 
-                if (link.length > 0) {
-                    const res = { ...val, metadata: link }
-                    // console.log(res)
-                    return res
-                }
-                return { ...val, metadata: "Untitled" }
-            }))
+            //     if (link.length > 0) {
+            //         const res = { ...val, metadata: link }
+            //         // console.log(res)
+            //         return res
+            //     }
+            //     return { ...val, metadata: "Untitled" }
+            // }))
 
             // revalidatePath to tell server to refresh the data 
             // const headerList = await headers();
             // const pathname = headerList.get("x-current-path");
-            console.log('getBookmarks ', bookmarks)
-            return bookmarks
+            bookmarks = data
+            return data
         }
         return []
     }
