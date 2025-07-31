@@ -75,6 +75,7 @@ export default function DialogEditBookmark({ bookmark }: { bookmark: fetchBookma
 
     function onSubmit(values: z.infer<typeof formSchema>) {
 
+        values.categories = values.categories.trim()
         console.log('updated values ', values)
         const result = {
             ...bookmark,
@@ -95,7 +96,7 @@ export default function DialogEditBookmark({ bookmark }: { bookmark: fetchBookma
     }
 
 
-    console.log('link ', form.watch('link'), 'category ', form.watch('categories'), 'label ', form.watch('labels'),)
+    // console.log('link ', form.watch('link'), 'category ', form.watch('categories'), 'label ', form.watch('labels'),)
 
     return (
         <Dialog open={check}>

@@ -83,6 +83,7 @@ export default function DialogForm() {
         // console.log('success ', values)
         // setForm(values)
 
+        values.categories = values.categories.trim()
         form.reset()
         setTags([])
         updateUserWithId({ formData: values, path: pathname })
@@ -188,7 +189,8 @@ export default function DialogForm() {
                                     <FormControl className="max-w-full">
                                         <TagInput
                                             styleClasses={{
-                                                inlineTagsContainer: 'border-primary border p-2 rounded-lg',
+                                                inlineTagsContainer: 'border-primary border p-2 rounded-lg ',
+                                                input: "shadow-none"
                                             }}
                                             customTagRenderer={
                                                 (tag, isActiveTag) => (<
@@ -236,7 +238,7 @@ export default function DialogForm() {
                                             placeholder="link associated to which topic?"
                                             tags={tags}
 
-                                            className="resize-y flex flex-wrap"
+                                            className="resize-y flex flex-wrap "
                                             setTags={(newTags) => {
                                                 // console.log(newTags)
                                                 setTags(newTags)
