@@ -2,14 +2,15 @@ import Header from '@/components/Header(login-signup)/Header';
 import Link from 'next/link';
 import { createClient } from '@/utils/supabase/server';
 import { redirect } from 'next/navigation';
+import OauthButton from '@/components/oauthButton';
 
-export default async function Login({
+export default async function Signin({
     searchParams,
 }: {
     searchParams: { message: string };
 }) {
 
-    const login = async (formData: FormData) => {
+    const signin = async (formData: FormData) => {
         'use server'
 
         const email = formData.get('email') as string
@@ -25,7 +26,7 @@ export default async function Login({
 
         console.log(error)
         if (error) {
-            redirect('/login?message= Login Error: Email or Password not matched')
+            redirect('/signin?message= Signin Error: Email or Password not matched')
         }
 
         const { data: { user } } = await supabase.auth.getUser()
@@ -47,7 +48,7 @@ export default async function Login({
             </Link>
 
             <div className="w-full p-8 rounded-lg border-2 border-primary px-8 sm:max-w-md mx-auto mt-4">
-                <form action={login} className="animate-in flex-1 flex flex-col w-full justify-center gap-2 text-foreground mb-4">
+                <form action={signin} className="animate-in flex-1 flex flex-col w-full justify-center gap-2 text-foreground mb-4">
                     <label className="text-md" htmlFor="email">
                         Email
                     </label>
@@ -94,6 +95,16 @@ export default async function Login({
                 >
                     Don&apos;t have an Account? Sign Up
                 </Link>
+                <br />
+
+                <h1 className='text-2xl text-center my-4'>
+                    OR
+                </h1>
+
+                <div className='flex justify-center'>
+                    <OauthButton />
+                </div>
+
             </div>
         </div>
     );

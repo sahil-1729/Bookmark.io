@@ -21,7 +21,7 @@ export async function GetUserName() {
 export async function SignOut() {
   const supabase = createClient()
   await supabase.auth.signOut()
-  redirect('/login')
+  redirect('/signin')
 
 }
 

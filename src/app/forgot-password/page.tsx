@@ -64,7 +64,7 @@ export default async function ForgotPassword({
                 </form>
 
                 <Link
-                    href="/login"
+                    href="/signin"
                     className="rounded-md no-underline text-foreground text-sm"
                 >
                     Remember your password? Sign in

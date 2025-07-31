@@ -27,7 +27,7 @@ export default async function Signup({
         // console.log(supabase)
         const { error } = await supabase.auth.signUp({
             email, password,
-            //to login the user in browser, after the email is authenticated
+            //to signin the user in browser, after the email is authenticated
             options: {
                 emailRedirectTo: `${origin}/auth/callback`
             }
@@ -102,7 +102,7 @@ export default async function Signup({
                 </form>
 
                 <Link
-                    href="/login"
+                    href="/signin"
                     className="rounded-md no-underline text-foreground text-sm"
                 >
                     Already have an account? Sign In
