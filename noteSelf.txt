@@ -9,3 +9,7 @@ One of the problem - when i delete or add bookmark, later when i tried to edit a
 - I thought the reason could be that when server parent component rerenders the client child component wasn't rendering, so i did console log and turns out its true, 
 - but later when i put proper keys as bookmark id for each of the child component, it worked properly, even though the child component wasn't rerendered when parent component was rerendered, Ig the html doc is created on server itself, but only the client iteractivity part is executed in client side
 - So when i searched, the key component actually helped in cases where i m using components passing props, to make sure the child components also rerenders in case there's any change
+
+Problem while setting up the google auth feature
+- All i had to do was add the application code , but needed to to be added in client component only 
+- and add the code in auth/callback route.turns- Also add the domains which i was accessing in the supabase 'redirect url' dashboard

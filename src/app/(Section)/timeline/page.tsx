@@ -14,7 +14,6 @@ import ToggleVisit from "@/components/toggleVisit";
 import { Button } from "@/components/ui/button";
 import DialogEditBookmark from "@/components/dialogEditBookmark";
 import Link from "next/link";
-import { revalidatePath, revalidateTag } from "next/cache";
 
 
 export default async function Timeline() {
@@ -39,9 +38,9 @@ export default async function Timeline() {
               val.link = val.link.length > 100 ? temp : val.link;
               return (
                 <div key={val.id} className="bg-background p-4 border-primary border rounded-md flex flex-col gap-4 mx-4 mb-4 md:mb-8 ">
-                  <div className="flex justify-between">
+                  <div className="flex justify-between gap-4 sm:gap-8">
                     <a href={val.id} target="_blank" className="scroll-m-20 text-2xl font-semibold tracking-tight break-all lg:text-4xl">{val.metadata}</a>
-                    <div key={val.id} className="flex flex-row gap-4">
+                    <div key={val.id} className="flex flex-row gap-4 ">
                       <DialogEditBookmark bookmark={val} />
                       <DeleteBookmarkBtn bookmarkId={val.id} />
                     </div>
@@ -55,7 +54,7 @@ export default async function Timeline() {
 
                     <div className="flex flex-wrap gap-4">
                       {val.labels ? val.labels.map((value, key) =>
-                        <div key={key} className="border-2 bg-secondary text-secondary-foreground px-2 py-1 max-w-max rounded-lg">
+                        <div key={key} className="border-2 bg-secondary text-secondary-foreground px-2 py-1 max-w-max rounded-lg text-xs sm:text-base">
                           {value.text}
                         </div>
                       ) : ""}

@@ -44,7 +44,7 @@ export default async function Category({
                 <Navbar />
                 <div className="flex flex-row place-items-center p-4 gap-4 mb-2">
                     <Folder size={48} />
-                    <h1 className="text-4xl  font-semibold">
+                    <h1 className="sm:text-4xl  font-semibold text-3xl truncate">
                         Category : {decodedSlug}
                     </h1>
                 </div>
@@ -55,7 +55,7 @@ export default async function Category({
                             val.link = val.link.length > 100 ? temp : val.link;
                             return (
                                 <div key={val.id} className="bg-background p-4 border-primary border rounded-md flex flex-col gap-4 mx-4 mb-4 md:mb-8 ">
-                                    <div className="flex justify-between">
+                                    <div className="flex justify-between gap-4 sm:gap-8">
                                         <a href={val.link} target="_blank" className="scroll-m-20 text-2xl font-semibold tracking-tight break-all lg:text-4xl">{val.metadata}</a>
                                         <div key={val.id} className="flex flex-row gap-4">
                                             <DialogEditBookmark bookmark={val} />
@@ -69,10 +69,14 @@ export default async function Category({
                                     <div className="flex justify-between items-center">
 
                                         <div className="flex flex-wrap gap-4">
-                                            {val.labels ? val.labels.map((value, key) =>
-                                                <div key={key} className="bg-secondary text-secondary-foreground border px-2 py-1 max-w-max rounded-lg">
+                                            {val.labels ? val.labels.map((value, key) => {
+                                                const temp = value.text.substr(0, 10) + "...";
+                                                value.text = value.text.length > 8 ? temp : value.text;
+
+                                                return (<div key={key} className="bg-secondary text-secondary-foreground border px-2 py-1 max-w-max rounded-lg text-xs sm:text-base">
                                                     {value.text}
-                                                </div>
+                                                </div>)
+                                            }
                                             ) : ""}
                                         </div>
                                         <ToggleVisit bookmarkId={val.id} visited={val.visited ? val.visited : false} />

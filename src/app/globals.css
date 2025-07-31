@@ -98,6 +98,12 @@
   }
 } */
 
+@layer utilities {
+  .something {
+    @apply flex flex-between;
+  }
+}
+
 /* yellow */
 @layer base {
   :root {
