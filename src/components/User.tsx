@@ -33,6 +33,7 @@ export async function LogoutButton() {
 
   const name = await GetUserName()
 
+  console.log(name)
   return (
     name && (<div className="flex items-center gap-4">
       {name === "" ? "" : `Hey, ${name}`}
