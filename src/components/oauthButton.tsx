@@ -14,6 +14,10 @@ const OauthButton = () => {
             provider: 'google',
             options: {
                 redirectTo: `${window.location.origin}/auth/callback`,
+                queryParams: {
+                    access_type: 'offline',
+                    prompt: 'consent',
+                },
             },
         })
 
@@ -22,7 +26,7 @@ const OauthButton = () => {
             return
         }
         if (data.url) {
-            window.location.href = data.url
+            // window.location.href = data.url
         }
     }
 
@@ -36,7 +40,7 @@ const OauthButton = () => {
             <p className="text-md md:text-lg" >
                 Login using Google
             </p>
-            <Image src="google.png" alt="google" width={28} height={28} />
+            <Image src="/google.png" alt="google" width={28} height={28} />
         </Button>
     )
 }
