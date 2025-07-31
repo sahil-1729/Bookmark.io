@@ -21,9 +21,9 @@ const OauthButton = () => {
             console.log(error.message)
             return
         }
-        // if (data.url) {
-        //     window.location.href = data.url
-        // }
+        if (data.url) {
+            window.location.href = data.url
+        }
     }
 
     return (
