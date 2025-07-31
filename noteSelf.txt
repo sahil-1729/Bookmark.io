@@ -2,3 +2,10 @@ To send data from client to server component one of the ways is to use .bind met
 https://nextjs.org/docs/13/app/api-reference/functions/server-actions
 
 WHen using spaces in searchParams, the spaces are encoded with % and numbers like 20, so decode them we use decodeURIComponent a method which will decode the search Params
+
+Delay or latency while performing CRUD operations in the app was most likely at vercel end not your app, as when deployed in render it was running smoothly as expected
+
+One of the problem - when i delete or add bookmark, later when i tried to edit any one of other bookmark, lets say the bookmark next to the deleted bookmark, when the update box opens, the contents of the deleted bookmark shows up, the selected bookmark contents should have been opened, 
+- I thought the reason could be that when server parent component rerenders the client child component wasn't rendering, so i did console log and turns out its true, 
+- but later when i put proper keys as bookmark id for each of the child component, it worked properly, even though the child component wasn't rerendered when parent component was rerendered, Ig the html doc is created on server itself, but only the client iteractivity part is executed in client side
+- So when i searched, the key component actually helped in cases where i m using components passing props, to make sure the child components also rerenders in case there's any change

@@ -27,7 +27,7 @@ import {
 
 } from "@/components/ui/dialog"
 import { CirclePlus, SquarePen, X } from 'lucide-react';
-import { SetStateAction, useState } from "react"
+import { SetStateAction, useEffect, useState } from "react"
 import clsx from 'clsx';
 
 import { fetchBookmark, formInterface } from "@/types"
@@ -54,7 +54,6 @@ const formSchema: ZodType<formInterface> = z.object({
 })
 
 export default function DialogEditBookmark({ bookmark }: { bookmark: fetchBookmark }) {
-
     const [check, setCheck] = useState(false)
 
     const [tags, setTags] = useState<Tag[]>(bookmark.labels);
@@ -71,22 +70,22 @@ export default function DialogEditBookmark({ bookmark }: { bookmark: fetchBookma
 
 
     const pathname = usePathname()
-    const updateBookmarkWithId = UpdateBookmark.bind(null)
 
-    function onSubmit(values: z.infer<typeof formSchema>) {
+    async function onSubmit(values: z.infer<typeof formSchema>) {
 
         values.categories = values.categories.trim()
-        console.log('updated values ', values)
+        // console.log('updated values ', values)
         const result = {
             ...bookmark,
             categories: values.categories,
             link: values.link,
             labels: values.labels
         }
-        form.reset()
         // setTags([])
-        updateBookmarkWithId({ bookmark: result, path: pathname })
 
+        await UpdateBookmark({ bookmark: result, path: pathname })
+
+        form.reset()
         closeForm()
     }
 
@@ -95,12 +94,11 @@ export default function DialogEditBookmark({ bookmark }: { bookmark: fetchBookma
         setCheck(shift)
     }
 
-
     // console.log('link ', form.watch('link'), 'category ', form.watch('categories'), 'label ', form.watch('labels'),)
 
     return (
-        <Dialog open={check}>
-            <DialogTrigger asChild>
+        <Dialog key={bookmark.id} open={check}>
+            <DialogTrigger key={bookmark.id} asChild>
 
                 <Button onClick={() => {
                     closeForm()

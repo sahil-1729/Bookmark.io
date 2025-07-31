@@ -10,7 +10,7 @@ interface props {
 }
 
 export default async function UpdateBookmark({ bookmark, path }: props) {
-    console.log('The recieved data ', bookmark)
+    // console.log('The recieved data for udpate ', bookmark)
 
     const supabase = createClient()
     const { data: { user } } = await supabase.auth.getUser()
@@ -32,7 +32,7 @@ export default async function UpdateBookmark({ bookmark, path }: props) {
                 .eq('id', bookmark.id)
                 .eq('user_id', user.id)
 
-            // console.log(status)
+            // console.log('update bookmark ', status)
             revalidatePath(`${path}`)
 
         } catch (e) {
@@ -41,8 +41,6 @@ export default async function UpdateBookmark({ bookmark, path }: props) {
         }
 
     }
-
-
 
     //here it didn't work bc it was revalidating path before the bookmark was deleted
     // revalidatePath(`/`)

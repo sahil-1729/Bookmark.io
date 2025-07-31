@@ -9,7 +9,7 @@ interface props {
 }
 
 export default async function UpdateVisited({ bookmarkId, visited }: props) {
-    console.log('The recieved data ', bookmarkId)
+    // console.log('The recieved data ', bookmarkId)
 
     const supabase = createClient()
     const { data: { user } } = await supabase.auth.getUser()

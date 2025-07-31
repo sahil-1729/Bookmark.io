@@ -19,7 +19,8 @@ type labelData = {
 }
 
 export async function sendData({ formData, path }: props) {
-    console.log('recieved data - add bookmarks ', formData)
+    // console.log('recieved data - add bookmarks ', formData)
+
     const supabase = createClient()
     const { data: { user } } = await supabase.auth.getUser()
 

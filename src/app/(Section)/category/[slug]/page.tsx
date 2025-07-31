@@ -54,10 +54,10 @@ export default async function Category({
                             const temp = val.link.substr(0, 100) + "...";
                             val.link = val.link.length > 100 ? temp : val.link;
                             return (
-                                <div key={key} className="bg-background p-4 border-primary border rounded-md flex flex-col gap-4 mx-4 mb-4 md:mb-8 ">
+                                <div key={val.id} className="bg-background p-4 border-primary border rounded-md flex flex-col gap-4 mx-4 mb-4 md:mb-8 ">
                                     <div className="flex justify-between">
                                         <a href={val.link} target="_blank" className="scroll-m-20 text-2xl font-semibold tracking-tight break-all lg:text-4xl">{val.metadata}</a>
-                                        <div className="flex flex-row gap-4">
+                                        <div key={val.id} className="flex flex-row gap-4">
                                             <DialogEditBookmark bookmark={val} />
                                             <DeleteBookmarkBtn bookmarkId={val.id} />
                                         </div>

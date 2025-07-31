@@ -15,16 +15,15 @@ export default function DeleteBookmarkBtn({ bookmarkId }: { bookmarkId: string }
         // const bookmarkId = data.get('id')
         // console.log(data.get('id'))
 
-        const result: Array<Object> | Object = await deleteBookmark({ bookmarkId: bookmarkId })
         const deletedBookmark: { data: fetchBookmark, message: string } | { message: string } = await deleteBookmark({ bookmarkId: bookmarkId })
 
         if ('data' in deletedBookmark) {
-            console.log(deleteBookmark)
+            console.log(deletedBookmark)
             router.refresh()
             return
         }
 
-        console.log(result)
+        console.log(deletedBookmark.message)
     }
 
     return (
