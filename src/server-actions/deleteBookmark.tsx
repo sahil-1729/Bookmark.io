@@ -20,15 +20,15 @@ export default async function deleteData({ bookmarkId }: props) {
             .select()
         // .match({ id: bookmarkId,user_id: user.id  })
 
-        console.log('recieved data - delete bookmarks', data)
+        console.log('recieved data - delete bookmarks', data?.[0])
 
         if (error) {
             console.error('Error deleting data', error)
-            return { message: error };
+            return { message: "failed" };
         }
 
         if (data.length > 0) {
-            return data
+            return { data: data?.[0], message: "success" }
         }
     }
 

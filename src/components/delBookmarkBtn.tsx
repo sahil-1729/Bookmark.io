@@ -1,10 +1,11 @@
 'use client'
 
 import { Button } from "./ui/button"
-import { Trash } from "lucide-react"
+import { Link, Trash } from "lucide-react"
 import deleteBookmark from "../server-actions/deleteBookmark"
 
 import { useRouter } from "next/navigation"
+import { fetchBookmark } from "@/types"
 
 export default function DeleteBookmarkBtn({ bookmarkId }: { bookmarkId: string }) {
 
@@ -15,14 +16,17 @@ export default function DeleteBookmarkBtn({ bookmarkId }: { bookmarkId: string }
         // console.log(data.get('id'))
 
         const result: Array<Object> | Object = await deleteBookmark({ bookmarkId: bookmarkId })
+        const deletedBookmark: { data: fetchBookmark, message: string } | { message: string } = await deleteBookmark({ bookmarkId: bookmarkId })
 
-        if (Array.isArray(result)) {
+        if ('data' in deletedBookmark) {
+            console.log(deleteBookmark)
             router.refresh()
             return
         }
 
         console.log(result)
     }
+
     return (
         <>
             <Button key={bookmarkId} size='sm' onClick={() => {
@@ -33,4 +37,5 @@ export default function DeleteBookmarkBtn({ bookmarkId }: { bookmarkId: string }
         </>
     )
 
-} 
+}
+
