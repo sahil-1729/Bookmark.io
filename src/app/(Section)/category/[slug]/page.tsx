@@ -43,8 +43,8 @@ export default async function Category({
             <main className="border-white border-0 px-2 w-full h-full my-14 mx-4 sm:mx-0 sm:my-16">
                 <Navbar />
                 <div className="flex flex-row place-items-center p-4 gap-4 mb-2">
-                    <Folder size={48} />
-                    <h1 className="sm:text-4xl  font-semibold text-3xl truncate">
+                    <Folder className="lg:h-12 lg:w-12 h-10 w-10" />
+                    <h1 className="sm:text-3xl  font-semibold text-2xl truncate">
                         Category : {decodedSlug}
                     </h1>
                 </div>
@@ -56,15 +56,22 @@ export default async function Category({
                             return (
                                 <div key={val.id} className="bg-background p-4 border-primary border rounded-md flex flex-col gap-4 mx-4 mb-4 md:mb-8 ">
                                     <div className="flex justify-between gap-4 sm:gap-8">
-                                        <a href={val.link} target="_blank" className="scroll-m-20 text-2xl font-semibold tracking-tight break-all lg:text-4xl">{val.metadata}</a>
+                                        {/* metadata  */}
+                                        <a href={val.link} target="_blank" className="scroll-m-20 text-xl font-semibold tracking-tight break-all">
+                                            {val.metadata}
+                                        </a>
+
+                                        {/* delete and edit btn  */}
                                         <div key={val.id} className="flex flex-row gap-4">
                                             <DialogEditBookmark bookmark={val} />
                                             <DeleteBookmarkBtn bookmarkId={val.id} />
                                         </div>
                                     </div>
+                                    {/* link  */}
                                     <a href={val.link} target="_blank" className="text-sm font-medium leading-none break-all">{val.link}</a>
+                                    {/* category  */}
                                     <Link href={`/category/${val.categories}`}>
-                                        <Button key={val.id} size="sm" className="max-w-max border-lg border-primary text-primary-foreground ">{val.categories}</Button>
+                                        <Button key={val.id} size="sm" className="max-w-max border-lg border-primary text-primary-foreground text-xs sm:text-base">{val.categories}</Button>
                                     </Link>
                                     <div className="flex justify-between items-center">
 

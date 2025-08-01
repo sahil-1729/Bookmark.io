@@ -13,3 +13,7 @@ One of the problem - when i delete or add bookmark, later when i tried to edit a
 Problem while setting up the google auth feature
 - All i had to do was add the application code , but needed to to be added in client component only 
 - and add the code in auth/callback route.turns- Also add the domains which i was accessing in the supabase 'redirect url' dashboard
+
+
+Shadn ui components
+- https://blocks.starterkitpro.com/?ref=dailydev

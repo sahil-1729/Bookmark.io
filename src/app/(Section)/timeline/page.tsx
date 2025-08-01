@@ -39,16 +39,20 @@ export default async function Timeline() {
               return (
                 <div key={val.id} className="bg-background p-4 border-primary border rounded-md flex flex-col gap-4 mx-4 mb-4 md:mb-8 ">
                   <div className="flex justify-between gap-4 sm:gap-8">
-                    <a href={val.id} target="_blank" className="scroll-m-20 text-2xl font-semibold tracking-tight break-all lg:text-4xl">{val.metadata}</a>
+                    {/* metadata  */}
+                    <a href={val.id} target="_blank" className="scroll-m-20 text-2xl font-semibold tracking-tight break-all">{val.metadata}</a>
+                    {/* delete and edit btn  */}
                     <div key={val.id} className="flex flex-row gap-4 ">
                       <DialogEditBookmark bookmark={val} />
                       <DeleteBookmarkBtn bookmarkId={val.id} />
                     </div>
                   </div>
+                  {/* link  */}
                   <a href={val.link} target="_blank" className="text-sm font-medium leading-none break-all">{val.link}</a>
 
+                  {/* category  */}
                   <Link href={`/category/${val.categories}`}>
-                    <Button key={val.id} size="sm" className="max-w-max border-lg text-primary-foreground border-primary">{val.categories}</Button>
+                    <Button key={val.id} size="sm" className="max-w-max border-lg border-primary text-primary-foreground text-xs sm:text-base">{val.categories}</Button>
                   </Link>
                   <div className="flex justify-between items-center">
 
