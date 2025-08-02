@@ -1,8 +1,24 @@
 import { createServerClient, type CookieOptions } from "@supabase/ssr";
-import { cookies } from "next/headers";
+import { cookies, headers } from "next/headers";
 
-export const createClient = () => {
+export const createClient = (token?: string) => {
   const cookieStore = cookies();
+
+  const headerStore = headers();
+
+  const authorizationHeader = headerStore.get("authorization");
+  const bearerToken = authorizationHeader?.startsWith("Bearer ")
+    ? authorizationHeader.substring(7)
+    : undefined;
+
+  var result = undefined;
+  if (bearerToken) {
+    result = {
+      headers: {
+        Authorization: `Bearer ${bearerToken || token}`,
+      },
+    };
+  }
 
   return createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -34,6 +50,7 @@ export const createClient = () => {
       auth: {
         persistSession: true,
       },
+      global: result,
     }
   );
 };

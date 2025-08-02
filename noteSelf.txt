@@ -17,3 +17,16 @@ Problem while setting up the google auth feature
 
 Shadn ui components
 - https://blocks.starterkitpro.com/?ref=dailydev
+
+Optimized bookmarking feature, reducing page load time from 5 seconds to 2-3 seconds by fetching metadata during the add operation instead of the get operation.
+
+- One of the code practice always refactor and never ever repeat code like rewrite the same code, make use of fn then 
+
+- While creating extension, i thought of extracting metadata from the extension, i.e client side only, but extracting metadata requires packages which can run only in server side 
+
+Resource about forming backend api routes nextjs
+- https://nextjs.org/docs/app/api-reference/file-conventions/route
+
+While building extension, one of the major problems faced was the CORS error and fighuring out how to create backend as we cant create backend in extension
+Some of the ways were creating serverless functions, or creating backend on main machine(which i did at first), it works better in local, as ppl wont be able to access it apart from local 
+- To fix the cors issue i had to write the headers in next.config.mjs, and due to ONE MISSING COMMA, wasted 6 hours

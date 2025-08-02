@@ -6,7 +6,7 @@ import { GetMetadata } from "./getBookmark"
 
 interface props {
     formData: data,
-    path: string
+    path?: string
 }
 type data = {
     categories: string,
@@ -31,18 +31,26 @@ export async function sendData({ formData, path }: props) {
         let metadata = await GetMetadata(formData.link)
         metadata = metadata.length > 0 ? metadata : "Untitled"
 
-        const { data } = await supabase
+        const { data, error, status, statusText } = await supabase
             .from('bookmarks')
-            .insert({ user_id: user?.id, email: user?.email, categories: formData.categories, labels: formData.labels, link: formData.link, metadata: metadata }, { count: 'planned' })
+            .insert({
+                user_id: user?.id,
+                email: user?.email,
+                categories: formData.categories,
+                labels: formData.labels,
+                link: formData.link,
+                metadata: metadata
+            }, { count: 'planned' })
             .select()
-        // console.log('added bookmark', data)
+
+        // refer docs - https://supabase.com/docs/reference/javascript/select
+        console.log('added bookmark', data, status, statusText)
     }
 
     //removes the cached data on the specified path, thus refetching the data on that page for server components, which is abs necessary to get latest data
-
-    revalidatePath(`${path}`)
+    if (path) {
+        revalidatePath(`${path}`)
+    }
 
     // redirect('/timeline')
-
-    // return formData
 }
