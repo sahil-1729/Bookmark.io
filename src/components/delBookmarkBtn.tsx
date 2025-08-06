@@ -6,6 +6,7 @@ import deleteBookmark from "../server-actions/deleteBookmark"
 
 import { useRouter } from "next/navigation"
 import { fetchBookmark } from "@/types"
+import { toast } from "sonner"
 
 export default function DeleteBookmarkBtn({ bookmarkId }: { bookmarkId: string }) {
 
@@ -30,6 +31,11 @@ export default function DeleteBookmarkBtn({ bookmarkId }: { bookmarkId: string }
         <>
             <Button key={bookmarkId} size='sm' onClick={() => {
                 onDelete(bookmarkId)
+
+                toast("Deleting bookmark...")
+                setTimeout(() => {
+                    toast("Bookmark has been deleted")
+                }, 3000)
             }}>
                 < Trash size={16} />
             </Button>

@@ -35,6 +35,7 @@ import { formInterface } from "@/types"
 import { sendData } from "../server-actions/addBookmark"
 import { Tag, TagInput } from 'emblor';
 import { cn } from '@/lib/utils'
+import { toast } from 'sonner'
 
 const formSchema: ZodType<formInterface> = z.object({
     // labels: z.string().min(2, {
@@ -89,6 +90,12 @@ export default function DialogForm() {
         updateUserWithId({ formData: values, path: pathname })
 
         closeForm()
+
+        toast("Adding bookmark...")
+        setTimeout(() => {
+            toast("Bookmark has been added")
+        }, 3000)
+
     }
 
     function closeForm() {
@@ -109,7 +116,7 @@ export default function DialogForm() {
                 <Button onClick={() => {
                     closeForm()
                     form.reset()
-                }} className="right-12 bottom-12 fixed text-xl p-4">
+                }} className="right-12 bottom-8 fixed text-xl p-4">
                     <p>
                         Add bookmark
                     </p>
