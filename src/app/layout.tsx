@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/themeProvider"
+import { Toaster } from "@/components/ui/sonner"
 import { BookmarkProvider } from "@/context/app-context";
 const inter = Inter({ subsets: ["latin"] });
 
@@ -25,6 +26,7 @@ export default function RootLayout({
           <BookmarkProvider>
             {children}
           </BookmarkProvider>
+          <Toaster />
         </ThemeProvider>
       </body>
     </html>
