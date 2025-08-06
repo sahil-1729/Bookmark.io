@@ -6,19 +6,19 @@ export const createClient = (token?: string) => {
 
   const headerStore = headers();
 
-  const authorizationHeader = headerStore.get("authorization");
-  const bearerToken = authorizationHeader?.startsWith("Bearer ")
-    ? authorizationHeader.substring(7)
-    : undefined;
+  // const authorizationHeader = headerStore.get("authorization");
+  // const bearerToken = authorizationHeader?.startsWith("Bearer ")
+  //   ? authorizationHeader.substring(7)
+  //   : undefined;
 
-  var result = undefined;
-  if (bearerToken) {
-    result = {
-      headers: {
-        Authorization: `Bearer ${bearerToken || token}`,
-      },
-    };
-  }
+  // var result = undefined;
+  // if (bearerToken) {
+  //   result = {
+  //     headers: {
+  //       Authorization: `Bearer ${bearerToken || token}`,
+  //     },
+  //   };
+  // }
 
   return createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -50,7 +50,7 @@ export const createClient = (token?: string) => {
       auth: {
         persistSession: true,
       },
-      global: result,
+      // global: result,
     }
   );
 };
