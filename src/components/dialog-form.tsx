@@ -94,7 +94,7 @@ export default function DialogForm() {
         toast("Adding bookmark...")
         setTimeout(() => {
             toast("Bookmark has been added")
-        }, 3000)
+        }, 3500)
 
     }
 

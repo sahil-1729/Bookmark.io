@@ -35,7 +35,7 @@ export default function DeleteBookmarkBtn({ bookmarkId }: { bookmarkId: string }
                 toast("Deleting bookmark...")
                 setTimeout(() => {
                     toast("Bookmark has been deleted")
-                }, 3000)
+                }, 3500)
             }}>
                 < Trash size={16} />
             </Button>
