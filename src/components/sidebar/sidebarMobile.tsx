@@ -11,7 +11,7 @@ import {
 import { Button } from '../ui/button';
 import { Folder, Menu, X } from 'lucide-react';
 import Link from 'next/link';
-import { SidebarButtonSheet as SidebarButton } from './sidebar-button';
+import { SidebarButtonSheet as SidebarButton } from './sidebarButton';
 import { usePathname } from 'next/navigation';
 import { Separator } from '../ui/separator';
 import { uniq } from 'lodash';

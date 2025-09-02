@@ -8,11 +8,11 @@ import {
     Search,
     Component
 } from 'lucide-react';
-import { SidebarDesktop } from './sidebar-desktop';
+import { SidebarDesktop } from './sidebarDesktop';
 import { SidebarItems } from '@/types';
 // import { SidebarButton } from './sidebar-button';
 import { useMediaQuery } from 'usehooks-ts';
-import { SidebarMobile } from './sidebar-mobile';
+import { SidebarMobile } from './sidebarMobile';
 
 const sidebarItems: SidebarItems = {
     links: [

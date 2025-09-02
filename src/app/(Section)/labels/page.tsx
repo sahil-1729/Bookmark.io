@@ -1,5 +1,5 @@
 
-import BookmarkSidebar from "@/components/sidebar/bookmark-sidebar";
+import BookmarkSidebar from "@/components/sidebar/bookmarkSidebar";
 import DialogForm from "@/components/dialog-form";
 import Navbar from "@/components/navBar";
 import DialogLogin from "@/components/dialog-login-again";

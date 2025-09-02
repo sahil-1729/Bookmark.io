@@ -1,6 +1,6 @@
 'use client';
 
-import { SidebarButton } from './sidebar-button';
+import { SidebarButton } from './sidebarButton';
 import { formInterface, SidebarItems } from '@/types';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';

@@ -2,7 +2,7 @@ export const revalidate = 0
 export const fetchCache = 'force-no-store'
 export const dynamic = 'force-dynamic';
 
-import BookmarkSidebar from "@/components/sidebar/bookmark-sidebar";
+import BookmarkSidebar from "@/components/sidebar/bookmarkSidebar";
 import DialogForm from "@/components/dialog-form";
 import DeleteBookmarkBtn from "@/components/delBookmarkBtn";
 import Navbar from "@/components/navBar";

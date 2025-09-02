@@ -1,9 +1,10 @@
-// "use client"
 
-import BookmarkSidebar from "@/components/sidebar/bookmark-sidebar";
+
+import BookmarkSidebar from "@/components/sidebar/bookmarkSidebar";
 import DialogForm from "@/components/dialog-form";
 import Navbar from "@/components/navBar";
 import DialogLogin from "@/components/dialog-login-again";
+import SearchBar from "@/components/search/searchBar";
 
 export default function Home() {
 
@@ -13,7 +14,7 @@ export default function Home() {
             <BookmarkSidebar />
             <main className="border-white border-0 px-2 w-full h-full my-14 mx-4 sm:mx-0 sm:my-16">
                 <Navbar />
-                <p>Search results here</p>
+                <SearchBar />
                 <DialogForm />
                 <DialogLogin />
             </main>
