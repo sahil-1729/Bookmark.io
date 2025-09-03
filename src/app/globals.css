@@ -99,9 +99,9 @@
 } */
 
 @layer utilities {
-  .something {
+  /* .something {
     @apply flex flex-between;
-  }
+  } */
 }
 
 /* yellow */
