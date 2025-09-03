@@ -46,3 +46,16 @@ WHen i considered of creating serverless function for my extension backend, ther
 - after many hours of debugging, when i deployed again, the cors error was gone, but another error was shown, which was rls violated.
 - This was because i didn't make use of supabase/ssr package instead used dynamic import from supabase@js related package, also i had to include the bearer token in the createClient method to authenticate
 - After making the changes, it finally worked, extension was finally able to make api calls to deployed backend
+
+Now to create the semantic search engine, i learnt the functioning of search engine
+Then after digging more, i learnt i just need to add semantic search feature instead of creating the engine
+After watching several videos, i learnt that the to create semantic search feature, i need a vector database, there are several options, like pinecone(fast), elastic search(scalable), and i found pg vector, in supabase 
+
+And to get the data, to scrape it, there were several options, selenium and also pupetter, also playwright(made by the same devs who created pupetter)
+
+I didn't make use of selenium or pupetter as they would make my app more complex, so i just get the metadata that is the title of the sites, and then used google gemini stable model for creating the vector of the data, to store in the postgres vector database, in supabase
+- The problem i faced was not creating proper error handling, and not creating the vector of correct dimension, to solve this, i had to define a dimension in the table, and then create the appropriate dimension by the gemini model, and then push the data in database. 
+- The root cause was, instead of passing an array of integers representing dimensions for vector, i was passing array of objects.
+
+Then i created the UI for the search, and also created api route api/search to get the search results, one of the problems i faced was while sending response back to the client component, i wasn't able to read the response as it showed as a promise, to solve i had to make the response using NextResponse.json() 
+Later one of the problems i faced was that since was doing semantic search, the results were calculated from all the bookmarks in database, but i wanted the results only from bookmarks of that user using, for that purpose i added user id as parameter in the supabase function, so it ensures to find similar bookmark of that user only 
