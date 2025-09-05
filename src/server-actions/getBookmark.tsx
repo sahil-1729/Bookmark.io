@@ -12,12 +12,14 @@ export async function GetMetadata(link: string) {
     try {
         const metadata = await urlMetadata(url);
         // console.log(metadata)
+        // console.log(metadata.author, metadata.title, metadata.description, metadata.keywords, metadata.source, metadata.headings)
+        // title, author, description, keywords, source, headings array me text into a single string 
 
-        return metadata.title
+        return [metadata.title, metadata.description, metadata.author, metadata.keywords]
     } catch (e) {
         // console.log(e)
     }
-    return ""
+    return []
 
     // console.log(data)
     // }

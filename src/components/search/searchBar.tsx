@@ -6,10 +6,12 @@ import { Button } from "@/components/ui/button";
 import { ArrowUp, X } from "lucide-react";
 import { Input } from "../ui/input";
 import { useState } from "react";
+import { Toggle } from "../ui/toggle";
 
 export default function SearchBar() {
     const [input, setInput] = useState('');
     const [result, setResult] = useState([])
+    const [filter, setFilter] = useState(false)
 
     const handleSubmit = async (e: any) => {
 
@@ -24,7 +26,7 @@ export default function SearchBar() {
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify(query)
+                body: JSON.stringify({ query: query, filter: filter })
             })
 
             if (!response.ok) {
@@ -59,6 +61,10 @@ export default function SearchBar() {
                             <X />
                         </Button> : ""
                 }
+                <Toggle className="text-nowrap" onClick={() => {
+                    const value = !filter
+                    setFilter(value)
+                }}>Category | Labels</Toggle>
                 <Button type="submit" >
                     <ArrowUp />
                     <span className="sr-only" >Submit</span>

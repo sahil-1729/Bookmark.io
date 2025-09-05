@@ -4,6 +4,7 @@ import { createClient } from "@/utils/supabase/server";
 import { NextResponse } from "next/server";
 
 
+
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 
 // Take a user's prompt and convert it to an embedding (vector) so it can be 
@@ -13,7 +14,7 @@ async function generateEmbedding(message: string) {
 
     const response = await ai.models.embedContent({
         model: "gemini-embedding-001",
-        contents: message,
+        contents: [message],
         config: {
             outputDimensionality: 1536,
         },
@@ -23,7 +24,8 @@ async function generateEmbedding(message: string) {
         throw new Error("No embeddings returned");
     }
 
-    const embedding = response?.embeddings[0].values;
+    const embedding = response?.embeddings[0].values ? response?.embeddings[0].values : [];
+
     return embedding
 }
 
@@ -43,23 +45,30 @@ export type dataChunk = {
     visited: boolean
 }
 
-async function fetchRelevantContext(embedding: number[]) {
+async function fetchRelevantContext(embedding: number[], filter: boolean) {
     const supabase = createClient();
     const { data: user } = await supabase.auth.getUser()
     // console.log(user.user?.id)
 
-    const { data, error } = await supabase.rpc("get_relevant_chunks_bookmark", {
+
+    const { data, error } = filter ? await supabase.rpc("get_relevant_bookmark_by_filter", {
         query_vector: embedding,
-        match_threshold: 0.55,
+        match_threshold: 0.60,
+        match_count: 10,
+        users_id: user.user?.id ? user.user.id : 0
+    }) : await supabase.rpc("get_relevant_chunks_bookmark", {
+        query_vector: embedding,
+        match_threshold: 0.51,
         match_count: 10,
         users_id: user.user?.id ? user.user.id : 0
     });
 
+    console.log(data)
     if (error) throw error;
 
     const relevantData = data.map(
         (value: dataChunk) => {
-            console.log(value.similarity)
+            // console.log(value.similarity)
             return {
                 id: value.id,
                 metadata: value.metadata,
@@ -70,23 +79,21 @@ async function fetchRelevantContext(embedding: number[]) {
                 visited: value.visited
             }
         })
-    // JSON.stringify(
+
     return relevantData
-    // );
 }
 
 // Calls the functions above to response to user input and return 
 // AI generated responses using context from the database
 export async function POST(req: Request) {
     try {
-        const message = await req.json();
+        const message: { query: string, filter: boolean } = await req.json();
 
-        const embedding = await generateEmbedding(message);
+        const embedding = await generateEmbedding(message.query);
 
         // console.log('generated embedding ', embedding)
-        if (embedding) {
-            const context = await fetchRelevantContext(embedding);
-            // console.log(context)
+        if (embedding && message.filter) {
+            const context = await fetchRelevantContext(embedding, message.filter);
 
             return NextResponse.json({
                 data: context,
@@ -94,11 +101,19 @@ export async function POST(req: Request) {
             }, { status: 200 })
 
         }
+        const context = await fetchRelevantContext(embedding, message.filter);
+        // console.log(context)
 
-        return NextResponse.json({ error: 'Something went wrong' }, { status: 404 })
+        return NextResponse.json({
+            data: context,
+            message: 'success'
+        }, { status: 200 })
+
 
     } catch (error) {
         console.log("Error generating response: " + error);
+        return NextResponse.json({ error: 'Something went wrong' }, { status: 404 })
+
         throw error;
     }
 }

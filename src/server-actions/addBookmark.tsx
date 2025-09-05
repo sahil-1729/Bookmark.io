@@ -22,12 +22,14 @@ const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 
 // Take a user's prompt and convert it to an embedding (vector) so it can be 
 // compared to vectors in the database
-async function generateEmbedding(message: string) {
+async function generateEmbedding(messages: any) {
+    // console.log(messages)
+
     const ai = new GoogleGenAI({ apiKey: GEMINI_API_KEY });
 
     const response = await ai.models.embedContent({
         model: "gemini-embedding-001",
-        contents: message,
+        contents: messages,
         config: {
             outputDimensionality: 1536,
         },
@@ -49,12 +51,23 @@ export async function sendData({ formData, path }: props) {
 
     if (formData) {
 
-        // console.log(formData.labels)
+        let metadata: Array<string> = await GetMetadata(formData.link)
+        // metadata = metadata.length > 0 ? metadata : "Untitled"
 
-        let metadata = await GetMetadata(formData.link)
-        metadata = metadata.length > 0 ? metadata : "Untitled"
+        // add the labels and categories to the array for creating embedding 
+        const labels = formData.labels.map(val => val.text)
+        // metadata = metadata.concat([formData.categories], labels)
+
+        metadata = metadata.filter((val) => {
+            if (val.length > 0) {
+                return val
+            }
+        })
 
         const embedding = await generateEmbedding(metadata) ? await generateEmbedding(metadata) : ""
+
+        // generate embedding for categories and labels for filtered search results
+        const category_label_embedding = await generateEmbedding([...labels, formData.categories]) ? await generateEmbedding([...labels, formData.categories]) : ""
 
         const { data, error, status, statusText } = await supabase
             .from('bookmarks')
@@ -64,16 +77,19 @@ export async function sendData({ formData, path }: props) {
                 categories: formData.categories,
                 labels: formData.labels,
                 link: formData.link,
-                metadata: metadata,
-                vector: embedding
+                metadata: metadata[0],
+                vector: embedding,
+                category_label_vector: category_label_embedding
             }, { count: 'planned' })
             .select()
 
         if (error) {
             return "failure"
         }
+
         // refer docs - https://supabase.com/docs/reference/javascript/select
         // console.log('added bookmark', data, status, statusText, error)
+
     }
 
     //removes the cached data on the specified path, thus refetching the data on that page for server components, which is abs necessary to get latest data
