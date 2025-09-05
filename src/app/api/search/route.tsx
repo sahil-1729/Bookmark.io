@@ -63,7 +63,7 @@ async function fetchRelevantContext(embedding: number[], filter: boolean) {
         users_id: user.user?.id ? user.user.id : 0
     });
 
-    console.log(data)
+    console.log('filter ', filter, data)
     if (error) throw error;
 
     const relevantData = data.map(
