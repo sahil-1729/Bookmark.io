@@ -58,7 +58,7 @@ async function fetchRelevantContext(embedding: number[], filter: boolean) {
         users_id: user.user?.id ? user.user.id : 0
     }) : await supabase.rpc("get_relevant_chunks_bookmark", {
         query_vector: embedding,
-        match_threshold: 0.51,
+        match_threshold: 0.55,
         match_count: 10,
         users_id: user.user?.id ? user.user.id : 0
     });
