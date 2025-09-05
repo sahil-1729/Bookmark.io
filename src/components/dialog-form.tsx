@@ -37,7 +37,8 @@ import { Tag, TagInput } from 'emblor';
 import { cn } from '@/lib/utils'
 import { toast } from 'sonner'
 
-const formSchema: ZodType<formInterface> = z.object({
+// : ZodType<formInterface> 
+const formSchema = z.object({
     // labels: z.string().min(2, {
     //     message: "label must be at least 2 characters.",
     // }).max(50),
@@ -77,7 +78,7 @@ export default function DialogForm() {
     const updateUserWithId = sendData.bind(null)
 
     // 2. Define a submit handler.
-    function onSubmit(values: z.infer<typeof formSchema>) {
+    async function onSubmit(values: z.infer<typeof formSchema>) {
         //THIS FUNCTION IS EXECUTED ONLY AFTER BEING VALIDATED BY ZOD 
         // if failed to validate then the function wont execute 
 
@@ -87,15 +88,16 @@ export default function DialogForm() {
         values.categories = values.categories.trim()
         form.reset()
         setTags([])
-        updateUserWithId({ formData: values, path: pathname })
-
         closeForm()
-
         toast("Adding bookmark...")
-        setTimeout(() => {
-            toast("Bookmark has been added")
-        }, 4000)
 
+        const val = await updateUserWithId({ formData: values, path: pathname })
+
+        if (val === 'success') {
+            toast("Bookmark has been added")
+        } else {
+            toast("Something went wrong...")
+        }
     }
 
     function closeForm() {

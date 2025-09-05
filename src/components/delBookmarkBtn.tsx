@@ -19,23 +19,20 @@ export default function DeleteBookmarkBtn({ bookmarkId }: { bookmarkId: string }
         const deletedBookmark: { data: fetchBookmark, message: string } | { message: string } = await deleteBookmark({ bookmarkId: bookmarkId })
 
         if ('data' in deletedBookmark) {
-            console.log(deletedBookmark)
+            // console.log(deletedBookmark)
+            toast("Bookmark has been deleted")
             router.refresh()
             return
         }
 
-        console.log(deletedBookmark.message)
+        // console.log(deletedBookmark.message)
     }
 
     return (
         <>
             <Button key={bookmarkId} size='sm' onClick={() => {
                 onDelete(bookmarkId)
-
                 toast("Deleting bookmark...")
-                setTimeout(() => {
-                    toast("Bookmark has been deleted")
-                }, 3500)
             }}>
                 < Trash size={16} />
             </Button>

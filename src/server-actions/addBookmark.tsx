@@ -69,6 +69,9 @@ export async function sendData({ formData, path }: props) {
             }, { count: 'planned' })
             .select()
 
+        if (error) {
+            return "failure"
+        }
         // refer docs - https://supabase.com/docs/reference/javascript/select
         // console.log('added bookmark', data, status, statusText, error)
     }
@@ -77,6 +80,8 @@ export async function sendData({ formData, path }: props) {
     if (path) {
         revalidatePath(`${path}`)
     }
+
+    return "success"
 
     // redirect('/timeline')
 }
