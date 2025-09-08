@@ -94,9 +94,17 @@ export default function DialogForm() {
         const val = await updateUserWithId({ formData: values, path: pathname })
 
         if (val === 'success') {
-            toast("Bookmark has been added")
+
+            setTimeout(() => {
+                toast("Bookmark has been added")
+            }, 1000)
+
         } else {
-            toast("Something went wrong...")
+
+            setTimeout(() => {
+                toast("Something went wrong...")
+            }, 1000)
+
         }
     }
 

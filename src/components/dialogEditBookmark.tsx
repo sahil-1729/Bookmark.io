@@ -82,11 +82,10 @@ export default function DialogEditBookmark({ bookmark }: { bookmark: fetchBookma
             labels: values.labels
         }
         // setTags([])
+        closeForm()
+        form.reset()
 
         await UpdateBookmark({ bookmark: result, path: pathname })
-
-        form.reset()
-        closeForm()
     }
 
     function closeForm() {
