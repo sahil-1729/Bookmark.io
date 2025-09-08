@@ -25,7 +25,7 @@ export async function GetMetadata(link: string) {
     // }
 }
 
-const CreateSession = async () => {
+export const CreateSession = async () => {
     const supabase = createClient()
     const { data: { session }, error } = await supabase.auth.getSession()
 

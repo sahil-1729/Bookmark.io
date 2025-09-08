@@ -12,6 +12,7 @@ import { fetchBookmark } from "@/types";
 import { Folder } from "lucide-react";
 import { redirect } from "next/navigation";
 import Link from "next/link";
+import DialogShareBookmark from "@/components/dialogShareBookmark";
 
 // export async function generateStaticParams() {
 //     return [{ "id": 1 }]
@@ -27,6 +28,8 @@ export default async function Category({
 
     var bookmarks: fetchBookmark[] | null = []
     const response = await GetBookmark()
+    const user_id = response[0]?.user_id
+
     bookmarks = response.filter((val) => {
         // console.log(`|${val.categories}| |${decodedSlug}|`)
         return (val.categories === decodedSlug)
@@ -42,12 +45,18 @@ export default async function Category({
             <BookmarkSidebar />
             <main className="border-white border-0 px-2 w-full h-full my-14 mx-4 sm:mx-0 sm:my-16">
                 <Navbar />
-                <div className="flex flex-row place-items-center p-4 gap-4 mb-2">
-                    <Folder className="lg:h-12 lg:w-12 h-10 w-10" />
-                    <h1 className="sm:text-3xl  font-semibold text-2xl truncate">
-                        Category : {decodedSlug}
-                    </h1>
+                <div className="flex flex-row place-items-center justify-between p-4 mb-2">
+                    <div className="flex flex-row place-items-center  gap-4 ">
+                        <Folder className="lg:h-12 lg:w-12 h-10 w-10" />
+                        <h1 className="sm:text-3xl  font-semibold text-2xl truncate">
+                            Category : {decodedSlug}
+                        </h1>
+
+                    </div>
+                    <DialogShareBookmark user_id={user_id} category={decodedSlug} />
                 </div>
+
+
                 {
                     bookmarks.length > 0 ?
                         bookmarks.map((val: fetchBookmark, key: number) => {
