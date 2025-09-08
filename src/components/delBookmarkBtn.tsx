@@ -20,7 +20,11 @@ export default function DeleteBookmarkBtn({ bookmarkId }: { bookmarkId: string }
 
         if ('data' in deletedBookmark) {
             // console.log(deletedBookmark)
-            toast("Bookmark has been deleted")
+
+            setTimeout(() => {
+                toast("Bookmark has been deleted")
+            }, 1000)
+
             router.refresh()
             return
         }
