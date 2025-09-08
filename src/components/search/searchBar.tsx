@@ -45,7 +45,7 @@ export default function SearchBar() {
         <main className="px-4">
             <h1 className="text-2xl font-semibold mb-4">Search Bookmarks</h1>
 
-            <form onSubmit={handleSubmit} className="flex gap-2">
+            <form onSubmit={handleSubmit} className="flex gap-2 sm:flex-row flex-col">
                 <Input
                     className="p-4"
                     onChange={e => setInput(e.target.value)}
