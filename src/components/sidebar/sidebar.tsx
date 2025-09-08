@@ -18,26 +18,8 @@ const sidebarItems: SidebarItems = {
     links: [
         { label: 'Timeline', href: '/timeline', icon: History },
         { label: 'Search', href: '/search', icon: Search },
-        // { label: 'Groups', href: '/groups', icon: Component },
-        {
-            href: '/labels',
-            icon: Tags,
-            label: 'Labels',
-        },
     ],
-    // extras: (
-    //     <div className='flex flex-col gap-2'>
-    //         <SidebarButton icon={MoreHorizontal} className='w-full'>
-    //             More
-    //         </SidebarButton>
-    //         <SidebarButton
-    //             className='w-full justify-center text-white'
-    //             variant='default'
-    //         >
-    //             Tweet
-    //         </SidebarButton>
-    //     </div>
-    // ),
+
 };
 
 interface props {
